@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Cooky</string>
+    <array name="unit">
+        <item>kg</item>
+        <item>g</item>
+        <item>ml</item>
+        <item>l</item>
+
+
+    </array>
 </resources>
