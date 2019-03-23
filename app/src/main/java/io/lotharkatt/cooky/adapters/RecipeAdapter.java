@@ -16,6 +16,7 @@ import io.lotharkatt.cooky.models.Recipe;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
+
     private Context mCtx;
     private List<Recipe> recipeList;
     private static final String TAG = "RecipeAdapter";
@@ -46,6 +47,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.textViewDescription.setText(recipe.getDescription());
 
 
+
     }
 
     @Override
@@ -71,9 +73,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         @Override
         public void onClick(View v) {
      //       Toast.makeText(RecipeViewHolder.this,"Test Click lissener", Toast.LENGTH_LONG).show();
-            //Toast.makeText(RecipeActivity.this, "Product added", Toast.LENGTH_LONG).show();
+            //Toast.makeText(AddRecipeActivity.this, "Product added", Toast.LENGTH_LONG).show();
 
 
         }
+
+
+    }
+    public interface OnNoteListener{
+        void onNoteClick(int position);
     }
 }

@@ -1,22 +1,20 @@
 package io.lotharkatt.cooky.models;
 
-import com.google.firebase.firestore.Exclude;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Recipe {
 
-    //@Exclude
-    //private String id;
-    private String name;
-    private String author;
-    private String description;
-    int preparationTime;
-    Map<String, Object> ingredients;
-    List<String> tags;
-    List<String> steps = new ArrayList<String>();
+    String name;
+    String author;
+    String description;
+    // TODO: add timestamp for recipes
+    //private @ServerTimestamp Date timestamp
+    List<Ingredient> ingredients;
+    List <String> tags;
+    List<Step> steps;
+
 
 
 
@@ -24,11 +22,11 @@ public class Recipe {
 
     }
 
-    public Recipe(String name, String author, String description, int preparationTime, List<String> steps, Map<String, Object> ingredients) {
+    public Recipe(String name, String author, String description, List<String> tags, List<Ingredient> ingredients, List<Step> steps) {
         this.name = name;
         this.author = author;
         this.description = description;
-        this.preparationTime = preparationTime;
+        this.tags = tags;
         this.steps = steps;
         this.ingredients = ingredients;
 
@@ -50,4 +48,26 @@ public class Recipe {
         return description;
     }
 
+    public static class Step {
+        String stepDescription;
+        int stepTime;
+        Boolean stepTimer;
+
+        public Step(String description, int time, Boolean timer) {
+            this.stepDescription = description;
+            this.stepTime = time;
+            this.stepTimer = timer;
+        }
+    }
+    public static class Ingredient{
+        String ingredientName;
+        String ingredientUnit;
+        int ingredientQuantity;
+
+        public Ingredient(String name, String unit, int qunatity) {
+            this.ingredientName = name;
+            this.ingredientUnit = unit;
+            this.ingredientQuantity = qunatity;
+        }
+    }
 }
