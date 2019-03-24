@@ -23,7 +23,7 @@ import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.adapters.RecipeAdapter;
 import io.lotharkatt.cooky.models.Recipe;
 
-public class RecipesActivity extends AppCompatActivity implements RecipeAdapter.OnNoteListener {
+public class RecipesListActivity extends AppCompatActivity implements RecipeAdapter.OnNoteListener {
 
     private RecyclerView recyclerView;
     private RecipeAdapter adapter;

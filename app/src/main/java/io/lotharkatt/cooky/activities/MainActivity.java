@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openRecipeListActivity() {
-        Intent intent = new Intent(this, RecipesActivity.class);
+        Intent intent = new Intent(this, RecipesListActivity.class);
         startActivity(intent);
     }
 
