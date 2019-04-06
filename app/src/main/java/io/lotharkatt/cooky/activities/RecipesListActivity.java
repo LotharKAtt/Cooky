@@ -56,16 +56,10 @@ public class RecipesListActivity extends AppCompatActivity implements RecipeAdap
         adapter.setOnItemClickLIstener(new RecipeAdapter.OnClickListener() {
             @Override
             public void onItemClick(int position) {
-                // TODO: Switch to cooky slide
-
-
                 Intent intent = new Intent(RecipesListActivity.this, RecipeOverview.class);
                 intent.putExtra("Item", recipeList.get(position));
-
-
                 startActivity(intent);
 
-                Recipe recipe = recipeList.get(2);
 
                 //DEBUG
                 Toast.makeText(RecipesListActivity.this,"Test Click lissener", Toast.LENGTH_LONG).show();

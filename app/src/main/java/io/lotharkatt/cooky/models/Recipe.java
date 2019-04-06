@@ -3,19 +3,13 @@ package io.lotharkatt.cooky.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Recipe class store definition for Recipe object
+ */
 public class Recipe implements Parcelable {
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
 
-    public List<String> getTags() {
-        return tags;
-    }
 
     String name;
     String author;
@@ -27,11 +21,7 @@ public class Recipe implements Parcelable {
     List<String> tags;
     List<Step> steps;
 
-
-
-
     public Recipe(){
-
     }
 
 
@@ -46,6 +36,13 @@ public class Recipe implements Parcelable {
         this.ingredients = ingredients;
 
     }
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
 
     public int getGlobalTime() {
         return globalTime;
@@ -54,27 +51,6 @@ public class Recipe implements Parcelable {
     public void setGlobalTime(int globalTime) {
         this.globalTime = globalTime;
     }
-
-    protected Recipe(Parcel in) {
-        name = in.readString();
-        author = in.readString();
-        description = in.readString();
-        globalTime = in.readInt();
-        tags = in.createStringArrayList();
-    }
-
-    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
-        @Override
-        public Recipe createFromParcel(Parcel in) {
-            return new Recipe(in);
-        }
-
-        @Override
-        public Recipe[] newArray(int size) {
-            return new Recipe[size];
-        }
-
-    };
 
     public String getName() {
         return name;
@@ -94,23 +70,8 @@ public class Recipe implements Parcelable {
         return steps;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(author);
-        dest.writeString(description);
-        dest.writeInt(globalTime);
-        dest.writeStringList(tags);
-
-    }
-
-
-    public static class Step {
+    public static class Step implements Parcelable{
         String stepDescription;
         int stepTime;
         Boolean stepTimer;
@@ -123,6 +84,25 @@ public class Recipe implements Parcelable {
             this.stepTimer = timer;
         }
 
+        protected Step(Parcel in) {
+            stepDescription = in.readString();
+            stepTime = in.readInt();
+            byte tmpStepTimer = in.readByte();
+            stepTimer = tmpStepTimer == 0 ? null : tmpStepTimer == 1;
+        }
+
+        public static final Creator<Step> CREATOR = new Creator<Step>() {
+            @Override
+            public Step createFromParcel(Parcel in) {
+                return new Step(in);
+            }
+
+            @Override
+            public Step[] newArray(int size) {
+                return new Step[size];
+            }
+        };
+
         public String getStepDescription() {
             return stepDescription;
         }
@@ -134,8 +114,20 @@ public class Recipe implements Parcelable {
         public Boolean getStepTimer() {
             return stepTimer;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(stepDescription);
+            dest.writeInt(stepTime);
+            dest.writeByte((byte) (stepTimer == null ? 0 : stepTimer ? 1 : 2));
+        }
     }
-    public static class Ingredient {
+    public static class Ingredient implements Parcelable {
         String ingredientName;
         String ingredientUnit;
         int ingredientQuantity;
@@ -149,6 +141,24 @@ public class Recipe implements Parcelable {
             this.ingredientQuantity = qunatity;
         }
 
+        protected Ingredient(Parcel in) {
+            ingredientName = in.readString();
+            ingredientUnit = in.readString();
+            ingredientQuantity = in.readInt();
+        }
+
+        public static final Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
+            @Override
+            public Ingredient createFromParcel(Parcel in) {
+                return new Ingredient(in);
+            }
+
+            @Override
+            public Ingredient[] newArray(int size) {
+                return new Ingredient[size];
+            }
+        };
+
         public String getIngredientName() {
             return ingredientName;
         }
@@ -160,5 +170,55 @@ public class Recipe implements Parcelable {
         public int getIngredientQuantity() {
             return ingredientQuantity;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(ingredientName);
+            dest.writeString(ingredientUnit);
+            dest.writeInt(ingredientQuantity);
+        }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.author);
+        dest.writeString(this.description);
+        dest.writeInt(this.globalTime);
+        dest.writeTypedList(this.ingredients);
+        dest.writeStringList(this.tags);
+        dest.writeTypedList(this.steps);
+    }
+
+    protected Recipe(Parcel in) {
+        this.name = in.readString();
+        this.author = in.readString();
+        this.description = in.readString();
+        this.globalTime = in.readInt();
+        this.ingredients = in.createTypedArrayList(Ingredient.CREATOR);
+        this.tags = in.createStringArrayList();
+        this.steps = in.createTypedArrayList(Step.CREATOR);
+    }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel source) {
+            return new Recipe(source);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 }

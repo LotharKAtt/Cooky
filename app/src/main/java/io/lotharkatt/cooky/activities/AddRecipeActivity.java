@@ -35,6 +35,10 @@ public class AddRecipeActivity extends AppCompatActivity {
     List<Recipe.Ingredient> ingredients = new ArrayList<>();
     List<Recipe.Step> steps = new ArrayList<>();
     LinearLayout container;
+    List<String> test = new ArrayList<>();
+
+    String content;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,6 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
 
-
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,10 +74,11 @@ public class AddRecipeActivity extends AppCompatActivity {
                 final View addView = layoutInflater.inflate(R.layout.row, null);
                 EditText textOut = (EditText)addView.findViewById(R.id.textout);
                 textOut.setText(textIn.getText().toString());
+                content = textOut.getText().toString();
+
                 Button buttonRemove = (Button)addView.findViewById(R.id.remove);
 
-                String content = textOut.getText().toString();
-                System.out.print("ahoj 3" + content);
+
 
 
                 final View.OnClickListener thisListener = new View.OnClickListener(){
@@ -83,6 +87,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                         System.out.println("thisListener called:\t" + this + "\n");
                         System.out.println("Remove addView: " + addView + "\n\n");
                         ((LinearLayout)addView.getParent()).removeView(addView);
+                        test.remove(content);
 
 
                     }
@@ -90,14 +95,22 @@ public class AddRecipeActivity extends AppCompatActivity {
 
                 buttonRemove.setOnClickListener(thisListener);
                 container.addView(addView);
+                test.add(content);
+
+
+
+
+
+
 
 
             }
 
 
         });
-
+     //   System.out.println("his name is karel" + karel);
         tags.add("karel");
+
 
 
         Recipe.Ingredient ingredient = new Recipe.Ingredient("karel","kg",10);
@@ -121,6 +134,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String description = editTextDecription.getText().toString().trim();
 
 
+
                 int time = 12;
 
                 CollectionReference dbRec = db.collection("recipes");
@@ -132,7 +146,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(AddRecipeActivity.this, "Product added", Toast.LENGTH_LONG).show();
+                                Toast.makeText(AddRecipeActivity.this, "Product added" + test, Toast.LENGTH_LONG).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
