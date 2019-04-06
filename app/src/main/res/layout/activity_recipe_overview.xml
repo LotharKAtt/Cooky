@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name" />
+
+
+
+    <TextView
+        android:id="@+id/textViewAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Author"
+        android:layout_below="@id/textViewName"
+        />
+
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="4"
+        android:maxLines="4"
+        android:layout_below="@id/textViewAuthor"
+
+        android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."></TextView>
+
+    <TextView
+        android:id="@+id/textViewTime"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="20:00"
+        android:layout_below="@id/textViewDescription"
+
+
+        />
+
+
+
+
+    <TextView
+        android:id="@+id/textViewTags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="TAGS"
+        android:layout_below="@id/textViewTime"
+
+        />
+
+
+
+    <TextView
+        android:id="@+id/textViewIngredientsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewTags"
+
+        android:text="Ingredients"
+        android:textSize="24sp"
+
+        />
+
+    <TextView
+        android:id="@+id/textViewIngredient"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ingredient"
+        android:layout_below="@id/textViewIngredientsTitle"
+
+        />
+
+
+
+    <TextView
+        android:id="@+id/textViewSteps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Steps"
+        android:textSize="24sp"
+        android:layout_below="@id/textViewIngredient"
+
+
+        />
+
+    <TextView
+        android:id="@+id/textViewStep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/textViewSteps"
+
+        android:text="Step" />
+
+
+
+
+
+
+
+    <Button
+        android:id="@+id/btnStartCook"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/textViewStep"
+
+        android:text="Cook!" />
+
+
+
+
+</RelativeLayout>

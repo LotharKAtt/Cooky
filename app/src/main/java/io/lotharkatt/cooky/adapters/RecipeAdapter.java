@@ -1,17 +1,21 @@
 package io.lotharkatt.cooky.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import io.lotharkatt.cooky.R;
+import io.lotharkatt.cooky.activities.RecipeOverview;
 import io.lotharkatt.cooky.models.Recipe;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
@@ -20,6 +24,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     private Context mCtx;
     private List<Recipe> recipeList;
     private static final String TAG = "RecipeAdapter";
+    private OnClickListener mListner;
+
 
     public RecipeAdapter(Context mCtx, List<Recipe> recipeList) {
         this.mCtx = mCtx;
@@ -41,10 +47,20 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public void onBindViewHolder(@NonNull RecipeAdapter.RecipeViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder");
         Recipe recipe = recipeList.get(position);
+        List<Recipe.Step> steps = recipe.getSteps();
+        int totalStepTime=0;
+
+        for (Recipe.Step step : steps){
+            totalStepTime = totalStepTime + step.getStepTime();
+        }
+        recipe.setGlobalTime(totalStepTime);
+
+
 
         holder.textViewName.setText(recipe.getName());
         holder.textViewAuthor.setText(recipe.getAuthor());
         holder.textViewDescription.setText(recipe.getDescription());
+        holder.textViewTime.setText(String.valueOf(totalStepTime));
 
 
 
@@ -56,7 +72,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     }
 
     class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView textViewName, textViewAuthor, textViewDescription;
+        TextView textViewName, textViewAuthor, textViewDescription, textViewTime;
 
         public RecipeViewHolder(View itemView) {
             super(itemView);
@@ -64,23 +80,36 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             textViewName = itemView.findViewById(R.id.textViewName);
             textViewAuthor = itemView.findViewById(R.id.textViewAuthor);
             textViewDescription = itemView.findViewById(R.id.textViewDescription);
+            textViewTime = itemView.findViewById(R.id.textViewTime);
 
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListner != null){
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION){
+                            mListner.onItemClick(position);
+
+                        }
+                    }
+
+
+                }
+            });
 
 
         }
 
         @Override
-        public void onClick(View v) {
-     //       Toast.makeText(RecipeViewHolder.this,"Test Click lissener", Toast.LENGTH_LONG).show();
-            //Toast.makeText(AddRecipeActivity.this, "Product added", Toast.LENGTH_LONG).show();
-
-
-        }
+        public void onClick(View v) {}
 
 
     }
-    public interface OnNoteListener{
-        void onNoteClick(int position);
+    public interface OnClickListener{
+        void onItemClick(int position);
+    }
+    public void setOnItemClickLIstener(OnClickListener listener){
+        mListner = listener;
+
     }
 }

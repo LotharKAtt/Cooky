@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
+import android.content.Context;
+
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,7 +25,7 @@ import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.adapters.RecipeAdapter;
 import io.lotharkatt.cooky.models.Recipe;
 
-public class RecipesListActivity extends AppCompatActivity implements RecipeAdapter.OnNoteListener {
+public class RecipesListActivity extends AppCompatActivity implements RecipeAdapter.OnClickListener {
 
     private RecyclerView recyclerView;
     private RecipeAdapter adapter;
@@ -32,6 +34,8 @@ public class RecipesListActivity extends AppCompatActivity implements RecipeAdap
     private FirebaseFirestore db;
     private LinearLayout linearLayoutCardRecp;
 
+    public RecipesListActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,26 @@ public class RecipesListActivity extends AppCompatActivity implements RecipeAdap
         adapter = new RecipeAdapter(this, recipeList);
 
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickLIstener(new RecipeAdapter.OnClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // TODO: Switch to cooky slide
+
+
+                Intent intent = new Intent(RecipesListActivity.this, RecipeOverview.class);
+                intent.putExtra("Item", recipeList.get(position));
+
+
+                startActivity(intent);
+
+                Recipe recipe = recipeList.get(2);
+
+                //DEBUG
+                Toast.makeText(RecipesListActivity.this,"Test Click lissener", Toast.LENGTH_LONG).show();
+
+
+            }
+        });
 
         db = FirebaseFirestore.getInstance();
         db.collection("recipes").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -76,8 +100,11 @@ public class RecipesListActivity extends AppCompatActivity implements RecipeAdap
 
     }
 
+
+
     @Override
-    public void onNoteClick(int position) {
-        Log.d("New activity", "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL");
+    public void onItemClick(int position) {
+
     }
+
 }

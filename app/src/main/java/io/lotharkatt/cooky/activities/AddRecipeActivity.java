@@ -113,7 +113,6 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
 
-
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,10 +121,11 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String description = editTextDecription.getText().toString().trim();
 
 
+                int time = 12;
 
                 CollectionReference dbRec = db.collection("recipes");
                 // step bude taky mapa potrebuju casy
-                Recipe recipe = new Recipe(name, author, description, tags, ingredients, steps);
+                Recipe recipe = new Recipe(name, author, description, time, tags, ingredients, steps);
 
                 // TODO: Validation
                 dbRec.add(recipe)
