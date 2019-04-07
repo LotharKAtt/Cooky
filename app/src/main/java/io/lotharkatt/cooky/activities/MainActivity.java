@@ -55,21 +55,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-         countDownTimer = new CountDownTimer(30000, 1000) {
-             @Override
-             public void onTick(long millisUntilFinished) {
-                 tvTimer.setText("seconds remaining: " + millisUntilFinished / 1000);
+        countDownTimer = new CountDownTimer(30000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                tvTimer.setText("seconds remaining: " + millisUntilFinished / 1000);
 
-             }
+            }
 
-             @Override
-             public void onFinish() {
-                 tvTimer.setText("done!");
-                 v.vibrate(400);
+            @Override
+            public void onFinish() {
+                tvTimer.setText("done!");
+                v.vibrate(400);
 
 
-             }
-         };
+            }
+        };
     }
 
     private void openRecipeListActivity() {

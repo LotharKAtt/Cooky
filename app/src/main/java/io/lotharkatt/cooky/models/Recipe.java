@@ -3,6 +3,7 @@ package io.lotharkatt.cooky.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ public class Recipe implements Parcelable {
     String name;
     String author;
     String description;
+    String course;
     int globalTime;
     // TODO: add timestamp for recipes
     //private @ServerTimestamp Date timestamp
@@ -21,21 +23,22 @@ public class Recipe implements Parcelable {
     List<String> tags;
     List<Step> steps;
 
-    public Recipe(){
+    public Recipe() {
     }
 
 
-
-    public Recipe(String name, String author, String description, int globalTime, List<String> tags, List<Ingredient> ingredients, List<Step> steps) {
+    public Recipe(String name, String author, String description, String course, int globalTime, List<String> tags, List<Ingredient> ingredients, List<Step> steps) {
         this.name = name;
         this.author = author;
         this.description = description;
+        this.course = course;
         this.globalTime = globalTime;
         this.tags = tags;
         this.steps = steps;
         this.ingredients = ingredients;
 
     }
+
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
@@ -70,13 +73,18 @@ public class Recipe implements Parcelable {
         return steps;
     }
 
+    public String getCourse() {
+        return course;
+    }
 
-    public static class Step implements Parcelable{
+
+    public static class Step implements Parcelable {
         String stepDescription;
         int stepTime;
         Boolean stepTimer;
 
-        public Step(){}
+        public Step() {
+        }
 
         public Step(String description, int time, Boolean timer) {
             this.stepDescription = description;
@@ -127,12 +135,13 @@ public class Recipe implements Parcelable {
             dest.writeByte((byte) (stepTimer == null ? 0 : stepTimer ? 1 : 2));
         }
     }
+
     public static class Ingredient implements Parcelable {
         String ingredientName;
         String ingredientUnit;
         int ingredientQuantity;
 
-        public Ingredient(){
+        public Ingredient() {
         }
 
         public Ingredient(String name, String unit, int qunatity) {
@@ -194,6 +203,7 @@ public class Recipe implements Parcelable {
         dest.writeString(this.name);
         dest.writeString(this.author);
         dest.writeString(this.description);
+        dest.writeString(this.course);
         dest.writeInt(this.globalTime);
         dest.writeTypedList(this.ingredients);
         dest.writeStringList(this.tags);
@@ -204,6 +214,7 @@ public class Recipe implements Parcelable {
         this.name = in.readString();
         this.author = in.readString();
         this.description = in.readString();
+        this.course = in.readString();
         this.globalTime = in.readInt();
         this.ingredients = in.createTypedArrayList(Ingredient.CREATOR);
         this.tags = in.createStringArrayList();

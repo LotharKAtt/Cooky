@@ -18,10 +18,11 @@ public class RecipeOverview extends AppCompatActivity {
     String ingredientName, getIngredientUnit, stepDescription;
     int ingredientQuantity, stepTime;
     boolean stepTimer;
-    TextView textViewName, textViewAuthor, textViewDescription, textViewTime, textViewTag, textViewIngredient, textViewStep ;
+    TextView textViewName, textViewAuthor, textViewDescription, textViewTime, textViewTag, textViewIngredient, textViewStep;
     Button btnCook;
+    Recipe recpItem;
 
-    public RecipeOverview(){
+    public RecipeOverview() {
 
     }
 
@@ -31,9 +32,8 @@ public class RecipeOverview extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_overview);
 
 
-       Intent intent = getIntent();
-       Recipe recpItem = intent.getParcelableExtra("Item");
-       String lol = recpItem.getAuthor();
+        Intent intent = getIntent();
+        recpItem = intent.getParcelableExtra("Item");
 
 
         textViewName = (TextView) findViewById(R.id.textViewName);
@@ -53,7 +53,7 @@ public class RecipeOverview extends AppCompatActivity {
         textViewTag.setText(recpItem.getTags().toString());
 
         List<Recipe.Ingredient> ingredients = recpItem.getIngredients();
-        for(Recipe.Ingredient ingredient :ingredients){
+        for (Recipe.Ingredient ingredient : ingredients) {
             ingredientName = ingredient.getIngredientName();
             ingredientQuantity = ingredient.getIngredientQuantity();
             getIngredientUnit = ingredient.getIngredientUnit();
@@ -64,10 +64,9 @@ public class RecipeOverview extends AppCompatActivity {
         textViewIngredient.setText(ingredientName);
 
 
-
         List<Recipe.Step> steps = recpItem.getSteps();
         int size = steps.size();
-        for(Recipe.Step step :steps){
+        for (Recipe.Step step : steps) {
             stepDescription = step.getStepDescription();
             stepTime = step.getStepTime();
             stepTimer = step.getStepTimer();
@@ -82,10 +81,22 @@ public class RecipeOverview extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //DEBUG
-                Toast.makeText(RecipeOverview.this,"Test Click lissener", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(RecipeOverview.this, StepActivity.class);
+                intent.putExtra("Item2", recpItem);
+                startActivity(intent);
+
+
+                Toast.makeText(RecipeOverview.this, "Test Click lissener", Toast.LENGTH_LONG).show();
+                openStepActivity();
+
             }
         });
 
 
+    }
+
+    private void openStepActivity() {
+        Intent intent = new Intent(this, StepActivity.class);
+        startActivity(intent);
     }
 }

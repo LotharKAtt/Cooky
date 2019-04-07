@@ -67,16 +67,80 @@
                 android:layout_alignParentRight="true"
                 android:text="Add" />
 
+
+            <Spinner
+                android:id="@+id/spinnerint"
+                android:layout_width="95dp"
+
+                android:layout_height="37dp"
+                android:layout_toStartOf="@+id/add"
+                android:layout_toLeftOf="@id/textin"
+                android:entries="@array/unit" />
+
+
             <EditText
                 android:id="@+id/textin"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_marginRight="99dp"
                 android:layout_toLeftOf="@id/add" />
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewStepsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Ingredeints" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/addStep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Add" />
+
+
+
+            <EditText
+                android:inputType="textMultiLine"
+            android:lines="8"
+            android:minLines="2"
+            android:gravity="left"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:scrollbars="vertical"
+            />
+
+
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/containerSteps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"></LinearLayout>

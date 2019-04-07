@@ -19,9 +19,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.models.Recipe;
@@ -59,11 +57,9 @@ public class AddRecipeActivity extends AppCompatActivity {
         String tagString = editTextTags.getText().toString();
 
 
-        textIn = (EditText)findViewById(R.id.textin);
-        buttonAdd = (Button)findViewById(R.id.add);
+        textIn = (EditText) findViewById(R.id.textin);
+        buttonAdd = (Button) findViewById(R.id.add);
         container = (LinearLayout) findViewById(R.id.container);
-
-
 
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
@@ -72,22 +68,24 @@ public class AddRecipeActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View addView = layoutInflater.inflate(R.layout.row, null);
-                EditText textOut = (EditText)addView.findViewById(R.id.textout);
+                EditText textOut = (EditText) addView.findViewById(R.id.textout);
                 textOut.setText(textIn.getText().toString());
+
+
                 content = textOut.getText().toString();
-
-                Button buttonRemove = (Button)addView.findViewById(R.id.remove);
-
+                final Recipe.Ingredient ingredient = new Recipe.Ingredient(content, "kg", 30);
 
 
+                Button buttonRemove = (Button) addView.findViewById(R.id.remove);
 
-                final View.OnClickListener thisListener = new View.OnClickListener(){
+
+                final View.OnClickListener thisListener = new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         System.out.println("thisListener called:\t" + this + "\n");
                         System.out.println("Remove addView: " + addView + "\n\n");
-                        ((LinearLayout)addView.getParent()).removeView(addView);
-                        test.remove(content);
+                        ((LinearLayout) addView.getParent()).removeView(addView);
+                        ingredients.remove(ingredient);
 
 
                     }
@@ -95,35 +93,27 @@ public class AddRecipeActivity extends AppCompatActivity {
 
                 buttonRemove.setOnClickListener(thisListener);
                 container.addView(addView);
-                test.add(content);
-
-
-
-
-
-
+                ingredients.add(ingredient);
 
 
             }
 
 
         });
-     //   System.out.println("his name is karel" + karel);
         tags.add("karel");
 
 
+        // TODO: Remove when will be UI ready
+        Recipe.Step step = new Recipe.Step("Nakup", 5, false);
+        Recipe.Step step1 = new Recipe.Step("Nakrajej", 5, true);
+        Recipe.Step step2 = new Recipe.Step("Uvar", 5, false);
+        Recipe.Step step3 = new Recipe.Step("Profit", 5, false);
 
-        Recipe.Ingredient ingredient = new Recipe.Ingredient("karel","kg",10);
-        ingredients.add(ingredient);
 
-
-
-
-
-        Recipe.Step step = new Recipe.Step("yooolanda", 5, false);
         steps.add(step);
-
-
+        steps.add(step1);
+        steps.add(step2);
+        steps.add(step3);
 
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
@@ -134,12 +124,11 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String description = editTextDecription.getText().toString().trim();
 
 
-
                 int time = 12;
 
                 CollectionReference dbRec = db.collection("recipes");
                 // step bude taky mapa potrebuju casy
-                Recipe recipe = new Recipe(name, author, description, time, tags, ingredients, steps);
+                Recipe recipe = new Recipe(name, author, description, "Dinner", time, tags, ingredients, steps);
 
                 // TODO: Validation
                 dbRec.add(recipe)
@@ -151,7 +140,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddRecipeActivity.this,e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddRecipeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 
 
                     }
@@ -162,10 +151,10 @@ public class AddRecipeActivity extends AppCompatActivity {
     }
 
 
+    private void dataValidation() {
+    }
 
-
-    private void dataValidation(){}
-    private void separtateString(String tags){
+    private void separtateString(String tags) {
 
     }
 

@@ -48,20 +48,18 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         Log.d(TAG, "onBindViewHolder");
         Recipe recipe = recipeList.get(position);
         List<Recipe.Step> steps = recipe.getSteps();
-        int totalStepTime=0;
+        int totalStepTime = 0;
 
-        for (Recipe.Step step : steps){
+        for (Recipe.Step step : steps) {
             totalStepTime = totalStepTime + step.getStepTime();
         }
         recipe.setGlobalTime(totalStepTime);
-
 
 
         holder.textViewName.setText(recipe.getName());
         holder.textViewAuthor.setText(recipe.getAuthor());
         holder.textViewDescription.setText(recipe.getDescription());
         holder.textViewTime.setText(String.valueOf(totalStepTime));
-
 
 
     }
@@ -71,7 +69,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return recipeList.size();
     }
 
-    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textViewName, textViewAuthor, textViewDescription, textViewTime;
 
         public RecipeViewHolder(View itemView) {
@@ -85,9 +83,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (mListner != null){
+                    if (mListner != null) {
                         int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             mListner.onItemClick(position);
 
                         }
@@ -101,14 +99,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         }
 
         @Override
-        public void onClick(View v) {}
+        public void onClick(View v) {
+        }
 
 
     }
-    public interface OnClickListener{
+
+    public interface OnClickListener {
         void onItemClick(int position);
     }
-    public void setOnItemClickLIstener(OnClickListener listener){
+
+    public void setOnItemClickLIstener(OnClickListener listener) {
         mListner = listener;
 
     }

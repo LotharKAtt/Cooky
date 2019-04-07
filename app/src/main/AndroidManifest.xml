@@ -11,11 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.RecipeOverview"></activity>
-        <activity
-            android:name=".activities.TestActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.StepActivity"></activity>
+        <activity android:name=".activities.RecipeOverview" />
         <activity android:name=".activities.RecipesListActivity" />
         <activity android:name=".activities.AddRecipeActivity" />
         <activity android:name=".activities.MainActivity">
