@@ -39,7 +39,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return new RecipeViewHolder(
                 LayoutInflater.from(mCtx).inflate(R.layout.layout_recipe, parent, false)
 
-
         );
     }
 
@@ -55,12 +54,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         }
         recipe.setGlobalTime(totalStepTime);
 
-
         holder.textViewName.setText(recipe.getName());
         holder.textViewAuthor.setText(recipe.getAuthor());
         holder.textViewDescription.setText(recipe.getDescription());
         holder.textViewTime.setText(String.valueOf(totalStepTime));
-
 
     }
 
@@ -91,17 +88,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
                         }
                     }
 
-
                 }
             });
-
 
         }
 
         @Override
         public void onClick(View v) {
         }
-
 
     }
 

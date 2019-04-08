@@ -50,9 +50,9 @@ public class StepFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_step, container, false);
-        View title = v.findViewById(R.id.textViewStepDescription);
+        View title = v.findViewById(R.id.textViewStepTitle);
         ((TextView) title).setText(String.format("Step #%d", mNum));
-        View step = v.findViewById(R.id.lll);
+        View step = v.findViewById(R.id.textViewStepDescription);
         ((TextView) step).setText(String.format("Step  lol" + stepContent));
 
         return v;
