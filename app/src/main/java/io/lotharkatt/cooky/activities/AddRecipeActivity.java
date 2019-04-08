@@ -29,8 +29,8 @@ import io.lotharkatt.cooky.models.Recipe;
 
 public class AddRecipeActivity extends AppCompatActivity {
     Button buttonSubmit, buttonAdd;
-    EditText editTextName, editTextAuthor, editTextDescription, editTextTags, textIn;
-    Spinner spinnerCourse, spinnerIn, spinnerOut;
+    EditText editTextName, editTextAuthor, editTextDescription, editTextTags, ingredientNameIn;
+    Spinner spinnerCourse, spinnerIn;
     FirebaseFirestore db;
 
     List<String> tags = new ArrayList<>();
@@ -38,7 +38,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     List<Recipe.Step> steps = new ArrayList<>();
     LinearLayout container;
 
-    String ingredientName, course;
+    String ingredientUnit, course;
 
 
     @Override
@@ -80,7 +80,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
         spinnerIn = (Spinner) findViewById(R.id.spinnerint);
-//        textIn = (EditText) findViewById(R.id.textin);
+        ingredientNameIn = (EditText) findViewById(R.id.ingredientnamein);
         buttonAdd = (Button) findViewById(R.id.add);
         container = (LinearLayout) findViewById(R.id.container);
 
@@ -91,14 +91,33 @@ public class AddRecipeActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View addView = layoutInflater.inflate(R.layout.row, null);
-                EditText textOut = (EditText) addView.findViewById(R.id.textout);
-                textOut.setText(textIn.getText().toString());
+                Spinner  spinnerOut = (Spinner) addView.findViewById(R.id.spinnerout);
+                String[] unitsResources = getResources().getStringArray(R.array.unit);
+
+                ArrayAdapter<String> unitAdapter = new ArrayAdapter<String>(AddRecipeActivity.this, android.R.layout.simple_spinner_dropdown_item, unitsResources);
+                spinnerOut.setAdapter(unitAdapter);
+                spinnerOut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        ingredientUnit = parent.getSelectedItem().toString();
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
 
 
-                ingredientName = textOut.getText().toString();
 
 
-                final Recipe.Ingredient ingredient = new Recipe.Ingredient(ingredientName, "kg", 30);
+
+                EditText ingredientNameOut = (EditText) addView.findViewById(R.id.ingredientnameout);
+                ingredientNameOut.setText(ingredientNameIn.getText().toString());
+
+
+                final Recipe.Ingredient ingredient = new Recipe.Ingredient(ingredientNameOut.getText().toString(), ingredientUnit, 30);
 
 
                 Button buttonRemove = (Button) addView.findViewById(R.id.remove);

@@ -82,12 +82,12 @@
 
                 android:layout_height="37dp"
                 android:layout_toStartOf="@+id/add"
-                android:layout_toLeftOf="@id/textin"
+                android:layout_toLeftOf="@id/ingredientnamein"
                 android:entries="@array/unit" />
 
 
             <EditText
-                android:id="@+id/textin"
+                android:id="@+id/ingredientnamein"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
