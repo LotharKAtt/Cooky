@@ -40,6 +40,14 @@
         android:text="Tag"
         android:textSize="24sp" />
 
+
+    <Spinner
+        android:id="@+id/spinnerCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:entries="@array/course" />
+
     <TextView
         android:id="@+id/textViewSuroviny"
         android:layout_width="match_parent"
@@ -154,5 +162,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Submit" />
+
+
 
 </LinearLayout>

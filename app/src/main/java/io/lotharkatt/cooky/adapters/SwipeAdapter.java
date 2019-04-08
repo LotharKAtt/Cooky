@@ -8,12 +8,11 @@ import java.util.ArrayList;
 
 import io.lotharkatt.cooky.activities.StepActivity;
 import io.lotharkatt.cooky.activities.StepFragment;
-import io.lotharkatt.cooky.models.Recipe;
 
 public class SwipeAdapter extends FragmentStatePagerAdapter {
-    private static final int NUM_ITEMS = 10;
     private ArrayList<Integer> page_indexes;
     StepActivity stepActivity;
+
 
 
     public SwipeAdapter(FragmentManager fm, StepActivity stepActivity) {
@@ -21,7 +20,7 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
         this.stepActivity = stepActivity;
 
         page_indexes = new ArrayList<>();
-        for (int i = 0; i < NUM_ITEMS; i++) {
+        for (int i = 0; i < stepActivity.getNumberOfStep(); i++) {
             page_indexes.add(i);
         }
     }
@@ -32,7 +31,7 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
         }
 
         Integer index = page_indexes.get(position);
-        return StepFragment.newInstance(index, stepActivity.getRecept(position));
+        return StepFragment.newInstance(index, stepActivity.getStep(position));
 
     }
 

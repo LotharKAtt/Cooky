@@ -50,12 +50,16 @@ public class StepActivity extends FragmentActivity {
 
     }
 
-    public String getRecept(int position) {
+    public String getStep(int position) {
         List<Recipe.Step> recipes = recipe.getSteps();
-        String description = recipes.get(position).getStepDescription();
+        String stepDescription = recipes.get(position).getStepDescription();
 
-        return description;
+        return stepDescription;
 
+    }
+    public int getNumberOfStep(){
+        List<Recipe.Step> recipes = recipe.getSteps();
+        return recipes.size();
     }
 
 

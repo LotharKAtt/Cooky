@@ -6,9 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,16 +29,16 @@ import io.lotharkatt.cooky.models.Recipe;
 
 public class AddRecipeActivity extends AppCompatActivity {
     Button buttonSubmit, buttonAdd;
-    EditText editTextName, editTextAuthor, editTextDecription, editTextTags, textIn;
+    EditText editTextName, editTextAuthor, editTextDescription, editTextTags, textIn;
+    Spinner spinnerCourse, spinnerIn, spinnerOut;
     FirebaseFirestore db;
 
     List<String> tags = new ArrayList<>();
     List<Recipe.Ingredient> ingredients = new ArrayList<>();
     List<Recipe.Step> steps = new ArrayList<>();
     LinearLayout container;
-    List<String> test = new ArrayList<>();
 
-    String content;
+    String ingredientName, course;
 
 
     @Override
@@ -51,13 +54,33 @@ public class AddRecipeActivity extends AppCompatActivity {
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         editTextAuthor = (EditText) findViewById(R.id.editTextAuthor);
         editTextName = (EditText) findViewById(R.id.editTextName);
-        editTextDecription = (EditText) findViewById(R.id.editTextDescription);
+        editTextDescription = (EditText) findViewById(R.id.editTextDescription);
         editTextTags = (EditText) findViewById(R.id.editTextTag);
         // TODO: separate tags from one long string to list
         String tagString = editTextTags.getText().toString();
 
 
-        textIn = (EditText) findViewById(R.id.textin);
+        spinnerCourse = (Spinner) findViewById(R.id.spinnerCourse);
+        String[] courseResource = getResources().getStringArray(R.array.course);
+        ArrayAdapter<String> courseAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courseResource);
+        spinnerCourse.setAdapter(courseAdapter);
+        spinnerCourse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                course = parent.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+        spinnerIn = (Spinner) findViewById(R.id.spinnerint);
+//        textIn = (EditText) findViewById(R.id.textin);
         buttonAdd = (Button) findViewById(R.id.add);
         container = (LinearLayout) findViewById(R.id.container);
 
@@ -72,8 +95,10 @@ public class AddRecipeActivity extends AppCompatActivity {
                 textOut.setText(textIn.getText().toString());
 
 
-                content = textOut.getText().toString();
-                final Recipe.Ingredient ingredient = new Recipe.Ingredient(content, "kg", 30);
+                ingredientName = textOut.getText().toString();
+
+
+                final Recipe.Ingredient ingredient = new Recipe.Ingredient(ingredientName, "kg", 30);
 
 
                 Button buttonRemove = (Button) addView.findViewById(R.id.remove);
@@ -85,6 +110,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                         System.out.println("thisListener called:\t" + this + "\n");
                         System.out.println("Remove addView: " + addView + "\n\n");
                         ((LinearLayout) addView.getParent()).removeView(addView);
+
+
                         ingredients.remove(ingredient);
 
 
@@ -100,6 +127,8 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
         });
+
+
         tags.add("karel");
 
 
@@ -121,21 +150,21 @@ public class AddRecipeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = editTextName.getText().toString().trim();
                 String author = editTextAuthor.getText().toString().trim();
-                String description = editTextDecription.getText().toString().trim();
+                String description = editTextDescription.getText().toString().trim();
 
 
                 int time = 12;
 
                 CollectionReference dbRec = db.collection("recipes");
                 // step bude taky mapa potrebuju casy
-                Recipe recipe = new Recipe(name, author, description, "Dinner", time, tags, ingredients, steps);
+                Recipe recipe = new Recipe(name, author, description, course, time, tags, ingredients, steps);
 
                 // TODO: Validation
                 dbRec.add(recipe)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(AddRecipeActivity.this, "Product added" + test, Toast.LENGTH_LONG).show();
+                                Toast.makeText(AddRecipeActivity.this, "Product added", Toast.LENGTH_LONG).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -157,5 +186,4 @@ public class AddRecipeActivity extends AppCompatActivity {
     private void separtateString(String tags) {
 
     }
-
 }
