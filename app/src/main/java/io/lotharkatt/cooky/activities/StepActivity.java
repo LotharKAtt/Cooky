@@ -29,7 +29,7 @@ public class StepActivity extends FragmentActivity {
 
 
         swipePager = findViewById(R.id.pager);
-        swipeAdapter = new SwipeAdapter(getSupportFragmentManager());
+        swipeAdapter = new SwipeAdapter(getSupportFragmentManager(), this);
         swipePager.setAdapter(swipeAdapter);
 
         findViewById(R.id.goto_first).setOnClickListener(new View.OnClickListener() {
@@ -53,7 +53,6 @@ public class StepActivity extends FragmentActivity {
     public String getRecept(int position) {
         List<Recipe.Step> recipes = recipe.getSteps();
         String description = recipes.get(position).getStepDescription();
-
 
         return description;
 

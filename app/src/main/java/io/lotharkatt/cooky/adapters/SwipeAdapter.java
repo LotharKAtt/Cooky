@@ -13,14 +13,12 @@ import io.lotharkatt.cooky.models.Recipe;
 public class SwipeAdapter extends FragmentStatePagerAdapter {
     private static final int NUM_ITEMS = 10;
     private ArrayList<Integer> page_indexes;
-    StepActivity stepActivity = new StepActivity();
+    StepActivity stepActivity;
 
 
-    String lol = "karel got";
-
-
-    public SwipeAdapter(FragmentManager fm) {
+    public SwipeAdapter(FragmentManager fm, StepActivity stepActivity) {
         super(fm);
+        this.stepActivity = stepActivity;
 
         page_indexes = new ArrayList<>();
         for (int i = 0; i < NUM_ITEMS; i++) {
@@ -34,8 +32,7 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
         }
 
         Integer index = page_indexes.get(position);
-        return StepFragment.newInstance(index, lol);
-//        return StepFragment.newInstance(index, stepActivity.getRecept(position));
+        return StepFragment.newInstance(index, stepActivity.getRecept(position));
 
     }
 
