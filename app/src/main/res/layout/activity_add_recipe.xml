@@ -124,26 +124,44 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/addStep"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="Add" />
-
-
                 <EditText
+                    android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:inputType="textMultiLine"
-                    android:lines="8"
-                    android:minLines="2"
-                    android:scrollbars="vertical" />
+                    android:hint="step Description" />
+
+                <EditText
+                    android:id="@+id/dates"
+                    android:layout_width="218dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="35dp"
+                    android:layout_toLeftOf="@+id/times" />
+
+                <CheckBox
+                    android:id="@id/times"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="128dp" />
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/times"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="-34dp"
+                    android:layout_marginRight="2dp"
+                    android:text="Add" />
 
 
             </RelativeLayout>

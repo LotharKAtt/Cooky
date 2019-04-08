@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import java.util.List;
-
 import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.adapters.SwipeAdapter;
 import io.lotharkatt.cooky.models.Recipe;
@@ -18,14 +16,13 @@ public class StepActivity extends FragmentActivity {
     ViewPager swipePager;
     Recipe recipe;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
 
         Intent intent = getIntent();
-        recipe = intent.getParcelableExtra("Item2");
+        recipe = (Recipe) intent.getParcelableExtra("Recipe");
 
 
         swipePager = findViewById(R.id.pager);
@@ -46,21 +43,21 @@ public class StepActivity extends FragmentActivity {
                 //              swipeAdapter.setCurrentItem(SwipeAdapter.getCount() - 1);
             }
         });
-
-
     }
 
     public String getStep(int position) {
-        List<Recipe.Step> recipes = recipe.getSteps();
-        String stepDescription = recipes.get(position).getStepDescription();
-
-        return stepDescription;
+        return recipe.getSteps().get(position).getStepDescription();
 
     }
-    public int getNumberOfStep(){
-        List<Recipe.Step> recipes = recipe.getSteps();
-        return recipes.size();
+
+    public int getNumberOfStep() {
+        return recipe.getSteps().size();
     }
+
+    public  int getStepTimer(int position){
+        return recipe.getSteps().get(position).getStepTime();
+    }
+
 
 
 }

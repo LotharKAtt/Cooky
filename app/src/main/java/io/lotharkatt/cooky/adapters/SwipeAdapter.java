@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 
 import io.lotharkatt.cooky.activities.StepActivity;
-import io.lotharkatt.cooky.activities.StepFragment;
+import io.lotharkatt.cooky.fragments.StepFragment;
 
 public class SwipeAdapter extends FragmentStatePagerAdapter {
     private ArrayList<Integer> page_indexes;

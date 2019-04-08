@@ -80,23 +80,17 @@ public class RecipeOverview extends AppCompatActivity {
         btnCook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //DEBUG
-                Intent intent = new Intent(RecipeOverview.this, StepActivity.class);
-                intent.putExtra("Item2", recpItem);
-                startActivity(intent);
-
-
-                Toast.makeText(RecipeOverview.this, "Test Click lissener", Toast.LENGTH_LONG).show();
+                Toast.makeText(RecipeOverview.this, "Test Click", Toast.LENGTH_LONG).show();
                 openStepActivity();
-
             }
         });
-
 
     }
 
     private void openStepActivity() {
         Intent intent = new Intent(this, StepActivity.class);
+        intent.putExtra("Recipe", recpItem);
+
         startActivity(intent);
     }
 }

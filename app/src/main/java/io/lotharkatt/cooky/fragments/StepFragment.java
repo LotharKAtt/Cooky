@@ -1,20 +1,13 @@
-package io.lotharkatt.cooky.activities;
+package io.lotharkatt.cooky.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.io.Serializable;
-
 import io.lotharkatt.cooky.R;
-import io.lotharkatt.cooky.adapters.SwipeAdapter;
-import io.lotharkatt.cooky.models.Recipe;
 
 
 public class StepFragment extends Fragment {
@@ -51,9 +44,9 @@ public class StepFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_step, container, false);
         View title = v.findViewById(R.id.textViewStepTitle);
-        ((TextView) title).setText(String.format("Step #%d", mNum));
+        ((TextView) title).setText(String.format("Step #%d", mNum + 1));
         View step = v.findViewById(R.id.textViewStepDescription);
-        ((TextView) step).setText(String.format("Step  lol" + stepContent));
+        ((TextView) step).setText(String.format(stepContent));
 
         return v;
     }

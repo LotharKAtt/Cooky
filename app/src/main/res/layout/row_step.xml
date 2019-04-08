@@ -1,61 +1,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="wrap_content">
 
-    >
-
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <EditText
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="step Description" />
 
-        >
-
-        <EditText
-            android:id="@+id/ingredientnameout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp" />
-
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/LinerLayoutCardRecp"
-        android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/dates"
+        android:layout_width="218dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp">
+        android:layout_below="@id/name"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="35dp"
+        android:layout_toLeftOf="@+id/times" />
 
+    <CheckBox
+        android:id="@id/times"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="136dp" />
 
-        <Button
-            android:id="@+id/remove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="Remove" />
-
-        <Switch
-            android:id="@+id/switchTimer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Switch" />
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-
-    </LinearLayout>
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/times"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-37dp"
+        android:layout_marginRight="22dp"
+        android:text="Delete" />
 
 
 </RelativeLayout>

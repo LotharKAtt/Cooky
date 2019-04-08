@@ -110,11 +110,9 @@ public class AddRecipeActivity extends AppCompatActivity {
                 });
 
 
-
-
-
                 EditText ingredientNameOut = (EditText) addView.findViewById(R.id.ingredientnameout);
                 ingredientNameOut.setText(ingredientNameIn.getText().toString());
+                ingredientNameIn.setText("");
 
 
                 final Recipe.Ingredient ingredient = new Recipe.Ingredient(ingredientNameOut.getText().toString(), ingredientUnit, 30);
@@ -171,11 +169,9 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String author = editTextAuthor.getText().toString().trim();
                 String description = editTextDescription.getText().toString().trim();
 
-
                 int time = 12;
 
                 CollectionReference dbRec = db.collection("recipes");
-                // step bude taky mapa potrebuju casy
                 Recipe recipe = new Recipe(name, author, description, course, time, tags, ingredients, steps);
 
                 // TODO: Validation

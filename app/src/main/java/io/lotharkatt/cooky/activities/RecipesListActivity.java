@@ -29,7 +29,7 @@ public class RecipesListActivity extends AppCompatActivity implements RecipeAdap
     private List<Recipe> recipeList;
     private ProgressBar progressBar;
     private FirebaseFirestore db;
-    private LinearLayout linearLayoutCardRecp;
+ //  private LinearLayout linearLayoutCardRecp;
 
     public RecipesListActivity() {
     }
@@ -38,7 +38,7 @@ public class RecipesListActivity extends AppCompatActivity implements RecipeAdap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
-        linearLayoutCardRecp = (LinearLayout) findViewById(R.id.LinerLayoutCardRecp);
+     //   linearLayoutCardRecp = (LinearLayout) findViewById(R.id.LinerLayoutCardRecp);
 
         progressBar = findViewById(R.id.progressbar);
 
@@ -66,28 +66,19 @@ public class RecipesListActivity extends AppCompatActivity implements RecipeAdap
                 progressBar.setVisibility(View.GONE);
 
                 if (!queryDocumentSnapshots.isEmpty()) {
-
                     List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-
                     for (DocumentSnapshot d : list) {
-
                         Recipe r = d.toObject(Recipe.class);
                         recipeList.add(r);
-
                     }
-
                     adapter.notifyDataSetChanged();
-
                 }
             }
         });
-
     }
-
 
     @Override
     public void onItemClick(int position) {
-
     }
 
 }
