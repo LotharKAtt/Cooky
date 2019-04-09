@@ -73,31 +73,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <EditText
+                    android:id="@+id/ingredientquantityin"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginRight="61dp"
+                    />
+
+
+                <EditText
+                    android:id="@+id/ingredientnamein"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginLeft="48dp"
+                    android:layout_marginRight="8dp"
+
+
+                    />
+
+                <Spinner
+                    android:id="@+id/spinnerin"
+                    android:layout_width="80dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_toStartOf="@+id/add"
+                    android:layout_toEndOf="@+id/ingredientnamein"
+                    android:entries="@array/unit" />
+
+
                 <Button
                     android:id="@+id/add"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="Add" />
+                    android:text="Add"/>
 
-
-                <Spinner
-                    android:id="@+id/spinnerint"
-                    android:layout_width="95dp"
-
-                    android:layout_height="37dp"
-                    android:layout_toStartOf="@+id/add"
-                    android:layout_toLeftOf="@id/ingredientnamein"
-                    android:entries="@array/unit" />
-
-
-                <EditText
-                    android:id="@+id/ingredientnamein"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginRight="99dp"
-                    android:layout_toLeftOf="@id/add" />
             </RelativeLayout>
 
             <LinearLayout

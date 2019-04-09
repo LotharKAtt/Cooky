@@ -29,7 +29,7 @@ import io.lotharkatt.cooky.models.Recipe;
 
 public class AddRecipeActivity extends AppCompatActivity {
     Button buttonSubmit, buttonAdd;
-    EditText editTextName, editTextAuthor, editTextDescription, editTextTags, ingredientNameIn;
+    EditText editTextName, editTextAuthor, editTextDescription, editTextTags, ingredientNameIn, ingredientQuantityIn;
     Spinner spinnerCourse, spinnerIn;
     FirebaseFirestore db;
 
@@ -37,9 +37,10 @@ public class AddRecipeActivity extends AppCompatActivity {
     List<Recipe.Ingredient> ingredients = new ArrayList<>();
     List<Recipe.Step> steps = new ArrayList<>();
     LinearLayout container;
+    String[] unitsResources;
 
     String ingredientUnit, course;
-
+    int ingPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +63,35 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         spinnerCourse = (Spinner) findViewById(R.id.spinnerCourse);
         String[] courseResource = getResources().getStringArray(R.array.course);
-        ArrayAdapter<String> courseAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courseResource);
+        final ArrayAdapter<String> courseAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courseResource);
         spinnerCourse.setAdapter(courseAdapter);
         spinnerCourse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 course = parent.getSelectedItem().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+        final Spinner  spinnerOut = (Spinner) findViewById(R.id.spinnerin);
+        unitsResources = getResources().getStringArray(R.array.unit);
+
+        ArrayAdapter<String> unitAdapter = new ArrayAdapter<String>(AddRecipeActivity.this, android.R.layout.simple_spinner_dropdown_item, unitsResources);
+
+        spinnerOut.setAdapter(unitAdapter);
+        spinnerOut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ingredientUnit = parent.getSelectedItem().toString();
+                ingPos = parent.getSelectedItemPosition();
+
+
             }
 
             @Override
@@ -78,9 +102,10 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
 
-
-        spinnerIn = (Spinner) findViewById(R.id.spinnerint);
+        spinnerIn = (Spinner) findViewById(R.id.spinnerin);
         ingredientNameIn = (EditText) findViewById(R.id.ingredientnamein);
+        ingredientQuantityIn = (EditText) findViewById(R.id.ingredientquantityin);
+
         buttonAdd = (Button) findViewById(R.id.add);
         container = (LinearLayout) findViewById(R.id.container);
 
@@ -91,31 +116,35 @@ public class AddRecipeActivity extends AppCompatActivity {
                 LayoutInflater layoutInflater =
                         (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View addView = layoutInflater.inflate(R.layout.row, null);
-                Spinner  spinnerOut = (Spinner) addView.findViewById(R.id.spinnerout);
-                String[] unitsResources = getResources().getStringArray(R.array.unit);
-
-                ArrayAdapter<String> unitAdapter = new ArrayAdapter<String>(AddRecipeActivity.this, android.R.layout.simple_spinner_dropdown_item, unitsResources);
-                spinnerOut.setAdapter(unitAdapter);
-                spinnerOut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        ingredientUnit = parent.getSelectedItem().toString();
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
 
 
+                // TODO: Validation on empty entries
                 EditText ingredientNameOut = (EditText) addView.findViewById(R.id.ingredientnameout);
                 ingredientNameOut.setText(ingredientNameIn.getText().toString());
                 ingredientNameIn.setText("");
 
 
-                final Recipe.Ingredient ingredient = new Recipe.Ingredient(ingredientNameOut.getText().toString(), ingredientUnit, 30);
+
+                EditText ingredientQuantityOut = (EditText) addView.findViewById(R.id.ingredientquantityout);
+                ingredientQuantityOut.setText(ingredientQuantityIn.getText().toString());
+                ingredientQuantityIn.setText("");
+
+
+
+                Spinner  spinnerOut2 = (Spinner) addView.findViewById(R.id.ingredientunitout);
+
+                ArrayAdapter<String> unitAdapter2 = new ArrayAdapter<String>(AddRecipeActivity.this, android.R.layout.simple_spinner_dropdown_item, unitsResources);
+
+                spinnerOut2.setAdapter(unitAdapter2);
+                spinnerOut2.setSelection(ingPos);
+
+
+
+
+
+
+
+                final Recipe.Ingredient ingredient = new Recipe.Ingredient(ingredientNameOut.getText().toString(), spinnerOut2.getSelectedItem().toString(), Integer.parseInt(ingredientQuantityOut.getText().toString()));
 
 
                 Button buttonRemove = (Button) addView.findViewById(R.id.remove);

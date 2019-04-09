@@ -6,15 +6,37 @@
     >
 
     <EditText
-        android:id="@+id/ingredientnameout"
-        android:layout_width="match_parent"
+        android:id="@+id/ingredientquantityout"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@id/spinnerout"
-    />
+        android:layout_marginStart="0dp"
+        android:layout_marginRight="61dp"
+        />
 
+
+    <EditText
+        android:id="@+id/ingredientnameout"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="83dp"
+        android:layout_marginLeft="83dp"
+        android:layout_marginRight="8dp"
+        android:layout_toLeftOf="@id/ingredientunitout" />
+
+    <!--TODO: Change to spinner -->
+    <!--<EditText-->
+        <!--android:id="@+id/ingredientunitout"-->
+        <!--android:layout_width="92dp"-->
+        <!--android:layout_height="49dp"-->
+        <!--android:layout_toStartOf="@+id/remove"-->
+        <!--android:layout_toLeftOf="@id/remove"-->
+        <!--android:entries="@array/unit" />-->
     <Spinner
-        android:id="@+id/spinnerout"
+        android:id="@+id/ingredientunitout"
         android:layout_width="92dp"
         android:layout_height="49dp"
         android:layout_toStartOf="@+id/remove"
