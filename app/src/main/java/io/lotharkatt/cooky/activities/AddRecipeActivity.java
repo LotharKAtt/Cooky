@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -28,17 +30,18 @@ import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.models.Recipe;
 
 public class AddRecipeActivity extends AppCompatActivity {
-    Button buttonSubmit, buttonAdd;
-    EditText editTextName, editTextAuthor, editTextDescription, editTextTags, ingredientNameIn, ingredientQuantityIn;
+    Button buttonSubmit, buttonAdd, buttonStepAdd;
+    EditText editTextName, editTextAuthor, editTextDescription, editTextTags, ingredientNameIn, ingredientQuantityIn, stepDescriptionIn, stepTimeIn;
     Spinner spinnerCourse, spinnerIn;
     FirebaseFirestore db;
 
+    CheckBox stepTimerIn, stepTimerOut;
     List<String> tags = new ArrayList<>();
     List<Recipe.Ingredient> ingredients = new ArrayList<>();
     List<Recipe.Step> steps = new ArrayList<>();
-    LinearLayout container;
+    LinearLayout container, containerStep;
     String[] unitsResources;
-
+    Boolean timerAllowed = false;
     String ingredientUnit, course;
     int ingPos;
 
@@ -130,17 +133,12 @@ public class AddRecipeActivity extends AppCompatActivity {
                 ingredientQuantityIn.setText("");
 
 
-
                 Spinner  spinnerOut2 = (Spinner) addView.findViewById(R.id.ingredientunitout);
 
                 ArrayAdapter<String> unitAdapter2 = new ArrayAdapter<String>(AddRecipeActivity.this, android.R.layout.simple_spinner_dropdown_item, unitsResources);
 
                 spinnerOut2.setAdapter(unitAdapter2);
                 spinnerOut2.setSelection(ingPos);
-
-
-
-
 
 
 
@@ -156,39 +154,109 @@ public class AddRecipeActivity extends AppCompatActivity {
                         System.out.println("thisListener called:\t" + this + "\n");
                         System.out.println("Remove addView: " + addView + "\n\n");
                         ((LinearLayout) addView.getParent()).removeView(addView);
-
-
                         ingredients.remove(ingredient);
-
-
                     }
                 };
-
                 buttonRemove.setOnClickListener(thisListener);
                 container.addView(addView);
                 ingredients.add(ingredient);
-
-
             }
-
-
         });
 
 
+        stepDescriptionIn = (EditText) findViewById(R.id.stepdescriptionin);
+        stepTimeIn = (EditText) findViewById(R.id.steptimein);
+        stepTimerIn = (CheckBox) findViewById(R.id.steptimerin);
+
+
+        buttonStepAdd = (Button) findViewById(R.id.btnstepadd);
+        containerStep = (LinearLayout) findViewById(R.id.containerSteps);
+
+
+        stepTimerIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(stepTimerIn.isChecked()){
+                    timerAllowed = true;
+                }
+                else {
+                    timerAllowed = false;
+                }
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+        buttonStepAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater layoutInflater =
+                        (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View addView = layoutInflater.inflate(R.layout.row_step, null);
+
+
+                // TODO: Validation on empty entries
+                EditText stepDescriptionOut = (EditText) addView.findViewById(R.id.stepdescriptionout);
+                stepDescriptionOut.setText(stepDescriptionIn.getText().toString());
+                stepDescriptionIn.setText("");
+
+
+                final EditText stepTimeOut = (EditText) addView.findViewById(R.id.steptimeout);
+                stepTimeOut.setText(stepTimeIn.getText().toString());
+                stepTimeIn.setText("");
+
+
+                stepTimerOut = (CheckBox) addView.findViewById(R.id.steptimerout);
+                stepTimerOut.setChecked(timerAllowed);
+
+                stepTimerOut.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if(stepTimerOut.isChecked()){
+                            timerAllowed = true;
+                        }
+                        else {
+                            timerAllowed = false;
+                        }
+                    }
+                });
+
+
+
+
+
+                final Recipe.Step step = new Recipe.Step(stepDescriptionOut.getText().toString(), Integer.parseInt(stepTimeOut.getText().toString()), timerAllowed);
+
+
+
+                Button buttonStepRemove = (Button) addView.findViewById(R.id.btnstepdelete);
+
+                final View.OnClickListener thisListener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        System.out.println("thisListener called:\t" + this + "\n");
+                        System.out.println("Remove addView: " + addView + "\n\n");
+                        ((LinearLayout) addView.getParent()).removeView(addView);
+                        steps.remove(step);
+                    }
+                };
+                buttonStepRemove.setOnClickListener(thisListener);
+                containerStep.addView(addView);
+                steps.add(step);
+            }
+        });
+
+
+
+
         tags.add("karel");
-
-
-        // TODO: Remove when will be UI ready
-        Recipe.Step step = new Recipe.Step("Nakup", 5, false);
-        Recipe.Step step1 = new Recipe.Step("Nakrajej", 5, true);
-        Recipe.Step step2 = new Recipe.Step("Uvar", 5, false);
-        Recipe.Step step3 = new Recipe.Step("Profit", 5, false);
-
-
-        steps.add(step);
-        steps.add(step1);
-        steps.add(step2);
-        steps.add(step3);
 
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {

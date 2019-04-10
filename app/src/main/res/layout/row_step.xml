@@ -4,34 +4,35 @@
     android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/stepdescriptionout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="step Description" />
 
     <EditText
-        android:id="@+id/dates"
+        android:id="@+id/steptimeout"
         android:layout_width="218dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name"
+        android:layout_below="@id/stepdescriptionout"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="0dp"
         android:layout_marginRight="35dp"
-        android:layout_toLeftOf="@+id/times" />
+        android:layout_toLeftOf="@+id/steptimerout" />
 
     <CheckBox
-        android:id="@id/times"
+        android:id="@id/steptimerout"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name"
+        android:layout_below="@id/stepdescriptionout"
         android:layout_alignParentRight="true"
         android:layout_marginTop="0dp"
         android:layout_marginRight="136dp" />
 
     <Button
+        android:id="@+id/btnstepdelete"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/times"
+        android:layout_below="@id/steptimerout"
         android:layout_alignParentRight="true"
         android:layout_marginTop="-37dp"
         android:layout_marginRight="22dp"

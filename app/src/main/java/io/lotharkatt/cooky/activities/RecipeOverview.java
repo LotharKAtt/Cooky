@@ -66,14 +66,17 @@ public class RecipeOverview extends AppCompatActivity {
 
         List<Recipe.Step> steps = recpItem.getSteps();
         int size = steps.size();
+
+        textViewStep = (TextView) findViewById(R.id.textViewStep);
         for (Recipe.Step step : steps) {
             stepDescription = step.getStepDescription();
             stepTime = step.getStepTime();
             stepTimer = step.getStepTimer();
+            textViewStep.setText(step.getStepDescription() + " ," );
+            
+
         }
 
-        textViewStep = (TextView) findViewById(R.id.textViewStep);
-        textViewStep.setText(stepDescription + Integer.toString(size));
 
 
         btnCook = (Button) findViewById(R.id.btnStartCook);

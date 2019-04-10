@@ -5,14 +5,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import io.lotharkatt.cooky.R;
+import io.lotharkatt.cooky.activities.AddRecipeActivity;
 
 
 public class StepFragment extends Fragment {
     int mNum;
     String stepContent;
+
 
 
     public StepFragment() {
@@ -47,6 +51,13 @@ public class StepFragment extends Fragment {
         ((TextView) title).setText(String.format("Step #%d", mNum + 1));
         View step = v.findViewById(R.id.textViewStepDescription);
         ((TextView) step).setText(String.format(stepContent));
+        View btnAlarm = v.findViewById(R.id.btnAlarm);
+        ((Button) btnAlarm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.print("==========================");
+            }
+        });
 
         return v;
     }
