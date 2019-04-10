@@ -41,7 +41,7 @@
 
 
         android:layout_toStartOf="@+id/remove"
-        android:entries="@array/unit" />
+        android:entries="@array/ingredientUnit" />
 
 
     <Button

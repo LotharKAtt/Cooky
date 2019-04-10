@@ -20,7 +20,7 @@ public class RecipeOverview extends AppCompatActivity {
     boolean stepTimer;
     TextView textViewName, textViewAuthor, textViewDescription, textViewTime, textViewTag, textViewIngredient, textViewStep;
     Button btnCook;
-    Recipe recpItem;
+    Recipe recipeItem;
 
     public RecipeOverview() {
 
@@ -33,26 +33,26 @@ public class RecipeOverview extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        recpItem = intent.getParcelableExtra("Item");
+        recipeItem = intent.getParcelableExtra("Item");
 
 
         textViewName = (TextView) findViewById(R.id.textViewName);
-        textViewName.setText(recpItem.getName());
+        textViewName.setText(recipeItem.getName());
 
 
         textViewAuthor = (TextView) findViewById(R.id.textViewAuthor);
-        textViewAuthor.setText(recpItem.getAuthor());
+        textViewAuthor.setText(recipeItem.getAuthor());
 
         textViewDescription = (TextView) findViewById(R.id.textViewDescription);
-        textViewDescription.setText(recpItem.getDescription());
+        textViewDescription.setText(recipeItem.getDescription());
 
         textViewTime = (TextView) findViewById(R.id.textViewTime);
-        textViewTime.setText(Integer.toString(recpItem.getGlobalTime()) + ":00");
+        textViewTime.setText(Integer.toString(recipeItem.getGlobalTime()) + ":00");
 
         textViewTag = (TextView) findViewById(R.id.textViewTags);
-        textViewTag.setText(recpItem.getTags().toString());
+        textViewTag.setText(recipeItem.getTags().toString());
 
-        List<Recipe.Ingredient> ingredients = recpItem.getIngredients();
+        List<Recipe.Ingredient> ingredients = recipeItem.getIngredients();
         for (Recipe.Ingredient ingredient : ingredients) {
             ingredientName = ingredient.getIngredientName();
             ingredientQuantity = ingredient.getIngredientQuantity();
@@ -64,7 +64,7 @@ public class RecipeOverview extends AppCompatActivity {
         textViewIngredient.setText(ingredientName);
 
 
-        List<Recipe.Step> steps = recpItem.getSteps();
+        List<Recipe.Step> steps = recipeItem.getSteps();
         int size = steps.size();
 
         textViewStep = (TextView) findViewById(R.id.textViewStep);
@@ -73,11 +73,7 @@ public class RecipeOverview extends AppCompatActivity {
             stepTime = step.getStepTime();
             stepTimer = step.getStepTimer();
             textViewStep.setText(step.getStepDescription() + " ," );
-            
-
         }
-
-
 
         btnCook = (Button) findViewById(R.id.btnStartCook);
         btnCook.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +88,7 @@ public class RecipeOverview extends AppCompatActivity {
 
     private void openStepActivity() {
         Intent intent = new Intent(this, StepActivity.class);
-        intent.putExtra("Recipe", recpItem);
+        intent.putExtra("Recipe", recipeItem);
 
         startActivity(intent);
     }

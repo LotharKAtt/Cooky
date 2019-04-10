@@ -30,20 +30,21 @@ import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.models.Recipe;
 
 public class AddRecipeActivity extends AppCompatActivity {
-    Button buttonSubmit, buttonAdd, buttonStepAdd;
+    Button buttonSubmit, buttonAddIngredient, buttonAddStep;
     EditText editTextName, editTextAuthor, editTextDescription, editTextTags, editTextIngredientNameIn, editTextIngredientQuantityIn, editTextStepDescriptionIn, editTextStepTimeIn;
-    Spinner spinnerCourse, spinnerIn;
+    Spinner spinnerCourse, spinnerIngredientIn;
     FirebaseFirestore db;
 
     CheckBox checkBoxStepTimerIn, checkBoxStepTimerOut;
     List<String> tags = new ArrayList<>();
     List<Recipe.Ingredient> ingredients = new ArrayList<>();
     List<Recipe.Step> steps = new ArrayList<>();
-    LinearLayout container, containerStep;
+    LinearLayout containerIngredient, containerStep;
     String[] unitsResources;
     Boolean timerAllowed = false;
     String ingredientUnit, course;
-    int ingPos;
+    int ingredientPosition;
+    int globalTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         String tagString = editTextTags.getText().toString();
 
 
+
         spinnerCourse = (Spinner) findViewById(R.id.spinnerCourse);
         String[] courseResource = getResources().getStringArray(R.array.course);
         final ArrayAdapter<String> courseAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courseResource);
@@ -82,17 +84,17 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
 
 
-        final Spinner  spinnerOut = (Spinner) findViewById(R.id.spinnerin);
-        unitsResources = getResources().getStringArray(R.array.unit);
+        final Spinner spinnerIngredientOut = (Spinner) findViewById(R.id.spinnerIngredientIn);
+        unitsResources = getResources().getStringArray(R.array.ingredientUnit);
 
         ArrayAdapter<String> unitAdapter = new ArrayAdapter<String>(AddRecipeActivity.this, android.R.layout.simple_spinner_dropdown_item, unitsResources);
 
-        spinnerOut.setAdapter(unitAdapter);
-        spinnerOut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerIngredientOut.setAdapter(unitAdapter);
+        spinnerIngredientOut.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ingredientUnit = parent.getSelectedItem().toString();
-                ingPos = parent.getSelectedItemPosition();
+                ingredientPosition = parent.getSelectedItemPosition();
 
 
             }
@@ -104,16 +106,15 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
 
 
+        spinnerIngredientIn = (Spinner) findViewById(R.id.spinnerIngredientIn);
+        editTextIngredientNameIn = (EditText) findViewById(R.id.editTextIngredientNameIn);
+        editTextIngredientQuantityIn = (EditText) findViewById(R.id.editTextIngredientQuantityIn);
 
-        spinnerIn = (Spinner) findViewById(R.id.spinnerin);
-        editTextIngredientNameIn = (EditText) findViewById(R.id.ingredientnamein);
-        editTextIngredientQuantityIn = (EditText) findViewById(R.id.ingredientquantityin);
-
-        buttonAdd = (Button) findViewById(R.id.add);
-        container = (LinearLayout) findViewById(R.id.container);
+        buttonAddIngredient = (Button) findViewById(R.id.add);
+        containerIngredient = (LinearLayout) findViewById(R.id.ingredientContainer);
 
 
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
+        buttonAddIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LayoutInflater layoutInflater =
@@ -127,19 +128,17 @@ public class AddRecipeActivity extends AppCompatActivity {
                 editTextIngredientNameIn.setText("");
 
 
-
                 EditText ingredientQuantityOut = (EditText) addView.findViewById(R.id.ingredientquantityout);
                 ingredientQuantityOut.setText(editTextIngredientQuantityIn.getText().toString());
                 editTextIngredientQuantityIn.setText("");
 
 
-                Spinner  spinnerOut2 = (Spinner) addView.findViewById(R.id.ingredientunitout);
+                Spinner spinnerOut2 = (Spinner) addView.findViewById(R.id.ingredientunitout);
 
                 ArrayAdapter<String> unitAdapter2 = new ArrayAdapter<String>(AddRecipeActivity.this, android.R.layout.simple_spinner_dropdown_item, unitsResources);
 
                 spinnerOut2.setAdapter(unitAdapter2);
-                spinnerOut2.setSelection(ingPos);
-
+                spinnerOut2.setSelection(ingredientPosition);
 
 
                 final Recipe.Ingredient ingredient = new Recipe.Ingredient(ingredientNameOut.getText().toString(), spinnerOut2.getSelectedItem().toString(), Integer.parseInt(ingredientQuantityOut.getText().toString()));
@@ -158,7 +157,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                     }
                 };
                 buttonRemove.setOnClickListener(thisListener);
-                container.addView(addView);
+                containerIngredient.addView(addView);
                 ingredients.add(ingredient);
             }
         });
@@ -169,17 +168,16 @@ public class AddRecipeActivity extends AppCompatActivity {
         checkBoxStepTimerIn = (CheckBox) findViewById(R.id.steptimerin);
 
 
-        buttonStepAdd = (Button) findViewById(R.id.btnstepadd);
+        buttonAddStep = (Button) findViewById(R.id.btnstepadd);
         containerStep = (LinearLayout) findViewById(R.id.containerSteps);
 
 
         checkBoxStepTimerIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(checkBoxStepTimerIn.isChecked()){
+                if (checkBoxStepTimerIn.isChecked()) {
                     timerAllowed = true;
-                }
-                else {
+                } else {
                     timerAllowed = false;
                 }
 
@@ -187,14 +185,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
-
-        buttonStepAdd.setOnClickListener(new View.OnClickListener() {
+        buttonAddStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LayoutInflater layoutInflater =
@@ -203,13 +194,13 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
                 // TODO: Validation on empty entries
-                EditText stepDescriptionOut = (EditText) addView.findViewById(R.id.stepdescriptionout);
-                stepDescriptionOut.setText(editTextStepDescriptionIn.getText().toString());
+                EditText editTextStepDescriptionOut = (EditText) addView.findViewById(R.id.stepdescriptionout);
+                editTextStepDescriptionOut.setText(editTextStepDescriptionIn.getText().toString());
                 editTextStepDescriptionIn.setText("");
 
 
-                final EditText stepTimeOut = (EditText) addView.findViewById(R.id.steptimeout);
-                stepTimeOut.setText(editTextStepTimeIn.getText().toString());
+                final EditText editTextStepTimeOut = (EditText) addView.findViewById(R.id.steptimeout);
+                editTextStepTimeOut.setText(editTextStepTimeIn.getText().toString());
                 editTextStepTimeIn.setText("");
 
 
@@ -219,21 +210,16 @@ public class AddRecipeActivity extends AppCompatActivity {
                 checkBoxStepTimerOut.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if(checkBoxStepTimerOut.isChecked()){
+                        if (checkBoxStepTimerOut.isChecked()) {
                             timerAllowed = true;
-                        }
-                        else {
+                        } else {
                             timerAllowed = false;
                         }
                     }
                 });
 
-
-
-
-
-                final Recipe.Step step = new Recipe.Step(stepDescriptionOut.getText().toString(), Integer.parseInt(stepTimeOut.getText().toString()), timerAllowed);
-
+                globalTime = globalTime + Integer.parseInt(editTextStepTimeOut.getText().toString());
+                final Recipe.Step step = new Recipe.Step(editTextStepDescriptionOut.getText().toString(), Integer.parseInt(editTextStepTimeOut.getText().toString()), timerAllowed);
 
 
                 Button buttonStepRemove = (Button) addView.findViewById(R.id.btnstepdelete);
@@ -254,8 +240,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
 
 
-
-
         tags.add("karel");
 
 
@@ -266,10 +250,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String author = editTextAuthor.getText().toString().trim();
                 String description = editTextDescription.getText().toString().trim();
 
-                int time = 12;
-
                 CollectionReference dbRec = db.collection("recipes");
-                Recipe recipe = new Recipe(name, author, description, course, time, tags, ingredients, steps);
+                Recipe recipe = new Recipe(name, author, description, course, globalTime, tags, ingredients, steps);
 
                 // TODO: Validation
                 dbRec.add(recipe)
@@ -291,11 +273,4 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
     }
 
-
-    private void dataValidation() {
-    }
-
-    private void separtateString(String tags) {
-
-    }
 }

@@ -57,7 +57,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.textViewName.setText(recipe.getName());
         holder.textViewAuthor.setText(recipe.getAuthor());
         holder.textViewDescription.setText(recipe.getDescription());
-        holder.textViewTime.setText(String.valueOf(totalStepTime));
+        holder.textViewTime.setText(String.valueOf(totalStepTime) + ":00");
 
     }
 

@@ -29,7 +29,6 @@ public class RecipesListActivity extends AppCompatActivity implements RecipeAdap
     private List<Recipe> recipeList;
     private ProgressBar progressBar;
     private FirebaseFirestore db;
- //  private LinearLayout linearLayoutCardRecp;
 
     public RecipesListActivity() {
     }
@@ -38,7 +37,6 @@ public class RecipesListActivity extends AppCompatActivity implements RecipeAdap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipes);
-     //   linearLayoutCardRecp = (LinearLayout) findViewById(R.id.LinerLayoutCardRecp);
 
         progressBar = findViewById(R.id.progressbar);
 
