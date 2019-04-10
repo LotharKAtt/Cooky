@@ -29,18 +29,14 @@ public class StepActivity extends FragmentActivity {
         swipeAdapter = new SwipeAdapter(getSupportFragmentManager(), this);
         swipePager.setAdapter(swipeAdapter);
 
-        findViewById(R.id.goto_first).setOnClickListener(new View.OnClickListener() {
+
+        findViewById(R.id.goto_back).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             }
         });
-        findViewById(R.id.delete_current).setOnClickListener(new View.OnClickListener() {
-            @Override
+
+        findViewById(R.id.goto_next).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            }
-        });
-        findViewById(R.id.goto_last).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //              swipeAdapter.setCurrentItem(SwipeAdapter.getCount() - 1);
             }
         });
     }
@@ -54,10 +50,13 @@ public class StepActivity extends FragmentActivity {
         return recipe.getSteps().size();
     }
 
-    public  int getStepTimer(int position){
-        return recipe.getSteps().get(position).getStepTime();
+
+    public boolean getTimer(int position) {
+        return recipe.getSteps().get(position).getStepTimer();
     }
 
+    public int getTime(int position) {
+        return recipe.getSteps().get(position).getStepTime();
 
-
+    }
 }

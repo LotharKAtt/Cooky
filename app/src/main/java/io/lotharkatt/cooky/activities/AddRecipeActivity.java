@@ -31,11 +31,11 @@ import io.lotharkatt.cooky.models.Recipe;
 
 public class AddRecipeActivity extends AppCompatActivity {
     Button buttonSubmit, buttonAdd, buttonStepAdd;
-    EditText editTextName, editTextAuthor, editTextDescription, editTextTags, ingredientNameIn, ingredientQuantityIn, stepDescriptionIn, stepTimeIn;
+    EditText editTextName, editTextAuthor, editTextDescription, editTextTags, editTextIngredientNameIn, editTextIngredientQuantityIn, editTextStepDescriptionIn, editTextStepTimeIn;
     Spinner spinnerCourse, spinnerIn;
     FirebaseFirestore db;
 
-    CheckBox stepTimerIn, stepTimerOut;
+    CheckBox checkBoxStepTimerIn, checkBoxStepTimerOut;
     List<String> tags = new ArrayList<>();
     List<Recipe.Ingredient> ingredients = new ArrayList<>();
     List<Recipe.Step> steps = new ArrayList<>();
@@ -106,8 +106,8 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
         spinnerIn = (Spinner) findViewById(R.id.spinnerin);
-        ingredientNameIn = (EditText) findViewById(R.id.ingredientnamein);
-        ingredientQuantityIn = (EditText) findViewById(R.id.ingredientquantityin);
+        editTextIngredientNameIn = (EditText) findViewById(R.id.ingredientnamein);
+        editTextIngredientQuantityIn = (EditText) findViewById(R.id.ingredientquantityin);
 
         buttonAdd = (Button) findViewById(R.id.add);
         container = (LinearLayout) findViewById(R.id.container);
@@ -123,14 +123,14 @@ public class AddRecipeActivity extends AppCompatActivity {
 
                 // TODO: Validation on empty entries
                 EditText ingredientNameOut = (EditText) addView.findViewById(R.id.ingredientnameout);
-                ingredientNameOut.setText(ingredientNameIn.getText().toString());
-                ingredientNameIn.setText("");
+                ingredientNameOut.setText(editTextIngredientNameIn.getText().toString());
+                editTextIngredientNameIn.setText("");
 
 
 
                 EditText ingredientQuantityOut = (EditText) addView.findViewById(R.id.ingredientquantityout);
-                ingredientQuantityOut.setText(ingredientQuantityIn.getText().toString());
-                ingredientQuantityIn.setText("");
+                ingredientQuantityOut.setText(editTextIngredientQuantityIn.getText().toString());
+                editTextIngredientQuantityIn.setText("");
 
 
                 Spinner  spinnerOut2 = (Spinner) addView.findViewById(R.id.ingredientunitout);
@@ -164,19 +164,19 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
 
 
-        stepDescriptionIn = (EditText) findViewById(R.id.stepdescriptionin);
-        stepTimeIn = (EditText) findViewById(R.id.steptimein);
-        stepTimerIn = (CheckBox) findViewById(R.id.steptimerin);
+        editTextStepDescriptionIn = (EditText) findViewById(R.id.stepdescriptionin);
+        editTextStepTimeIn = (EditText) findViewById(R.id.steptimein);
+        checkBoxStepTimerIn = (CheckBox) findViewById(R.id.steptimerin);
 
 
         buttonStepAdd = (Button) findViewById(R.id.btnstepadd);
         containerStep = (LinearLayout) findViewById(R.id.containerSteps);
 
 
-        stepTimerIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        checkBoxStepTimerIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(stepTimerIn.isChecked()){
+                if(checkBoxStepTimerIn.isChecked()){
                     timerAllowed = true;
                 }
                 else {
@@ -204,22 +204,22 @@ public class AddRecipeActivity extends AppCompatActivity {
 
                 // TODO: Validation on empty entries
                 EditText stepDescriptionOut = (EditText) addView.findViewById(R.id.stepdescriptionout);
-                stepDescriptionOut.setText(stepDescriptionIn.getText().toString());
-                stepDescriptionIn.setText("");
+                stepDescriptionOut.setText(editTextStepDescriptionIn.getText().toString());
+                editTextStepDescriptionIn.setText("");
 
 
                 final EditText stepTimeOut = (EditText) addView.findViewById(R.id.steptimeout);
-                stepTimeOut.setText(stepTimeIn.getText().toString());
-                stepTimeIn.setText("");
+                stepTimeOut.setText(editTextStepTimeIn.getText().toString());
+                editTextStepTimeIn.setText("");
 
 
-                stepTimerOut = (CheckBox) addView.findViewById(R.id.steptimerout);
-                stepTimerOut.setChecked(timerAllowed);
+                checkBoxStepTimerOut = (CheckBox) addView.findViewById(R.id.steptimerout);
+                checkBoxStepTimerOut.setChecked(timerAllowed);
 
-                stepTimerOut.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                checkBoxStepTimerOut.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if(stepTimerOut.isChecked()){
+                        if(checkBoxStepTimerOut.isChecked()){
                             timerAllowed = true;
                         }
                         else {

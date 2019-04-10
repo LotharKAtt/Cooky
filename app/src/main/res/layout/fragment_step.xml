@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment"
-        android:textSize="30sp"
+        android:textSize="36sp"
+        android:textStyle="bold"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="58dp" />
 
@@ -22,7 +23,7 @@
         android:id="@+id/btnAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:text="Alarm"
         app:layout_constraintBottom_toBottomOf="@+id/textViewStepTitle"
@@ -34,7 +35,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:text="TextView"
+        android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewAlarm"
+        android:layout_width="257dp"
+        android:layout_height="105dp"
+        android:layout_marginBottom="8dp"
+        android:text="Alarm"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewStepTitle"
+        app:layout_constraintStart_toStartOf="@+id/textViewStepTitle" />
 
 </android.support.constraint.ConstraintLayout>
