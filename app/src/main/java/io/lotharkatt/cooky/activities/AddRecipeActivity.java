@@ -2,8 +2,8 @@ package io.lotharkatt.cooky.activities;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,6 +55,10 @@ public class AddRecipeActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_add_recipe);
+
+        // TODO ADD BACK BUTTONS
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         db = FirebaseFirestore.getInstance();
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);

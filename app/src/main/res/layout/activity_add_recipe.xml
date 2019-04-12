@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
 
         <EditText
             android:id="@+id/editTextName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Name"
-            android:textSize="24sp" />
+            android:hint="Recipe name"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextAuthor"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Author"
+            android:hint="Author"
             android:textSize="24sp" />
 
         <EditText
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Description"
+            android:hint="Description of recipe"
             android:textSize="24sp" />
 
         <EditText
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tag"
+            android:hint="tag"
             android:textSize="24sp" />
 
 
@@ -60,7 +60,9 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Suroviny" />
+            android:text="Ingredients"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
         <LinearLayout
@@ -81,7 +83,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginRight="61dp"
-                    />
+                    android:hint="10" />
 
 
                 <EditText
@@ -94,7 +96,8 @@
 
 
                     android:layout_marginLeft="138dp"
-                    android:layout_marginRight="8dp" />
+                    android:layout_marginRight="8dp"
+                    android:hint="Ingredient" />
 
                 <Spinner
                     android:id="@+id/spinnerIngredientIn"
@@ -131,7 +134,9 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Ingredeints" />
+            android:text="Steps"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
         <LinearLayout
@@ -150,7 +155,7 @@
                     android:id="@+id/stepdescriptionin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="step Description" />
+                    android:hint="Description of step" />
 
                 <EditText
                     android:id="@+id/steptimein"
@@ -160,7 +165,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginTop="0dp"
                     android:layout_marginRight="35dp"
-                    android:layout_toLeftOf="@+id/steptimerin" />
+                    android:layout_toLeftOf="@+id/steptimerin"
+                    android:hint="Step time" />
 
                 <CheckBox
                     android:id="@id/steptimerin"

@@ -2,10 +2,10 @@ package io.lotharkatt.cooky.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -21,7 +21,7 @@ import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.adapters.RecipeAdapter;
 import io.lotharkatt.cooky.models.Recipe;
 
-public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnClickListener {
+public class RecipeListActivity extends AppCompatActivity implements RecipeAdapter.OnClickListener {
 
     private RecyclerView recyclerView;
     private RecipeAdapter adapter;
@@ -29,14 +29,14 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnC
     private ProgressBar progressBar;
     private FirebaseFirestore db;
 
-    public MainActivity() {
+    public RecipeListActivity() {
     }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_recipe_list);
         progressBar = findViewById(R.id.progressbar);
 
         recyclerView = findViewById(R.id.recyclerview_recipes);
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnC
         adapter.setOnItemClickLIstener(new RecipeAdapter.OnClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(MainActivity.this, RecipeOverview.class);
+                Intent intent = new Intent(RecipeListActivity.this, RecipeOverview.class);
                 intent.putExtra("Item", recipeList.get(position));
                 startActivity(intent);
             }

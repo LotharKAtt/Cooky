@@ -1,9 +1,9 @@
 package io.lotharkatt.cooky.activities;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 
 import io.lotharkatt.cooky.R;
@@ -30,10 +30,10 @@ public class StepActivity extends FragmentActivity {
         swipePager.setAdapter(swipeAdapter);
 
 
-        findViewById(R.id.goto_back).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            }
-        });
+            findViewById(R.id.goto_back).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                }
+            });
 
         findViewById(R.id.goto_next).setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -59,4 +59,5 @@ public class StepActivity extends FragmentActivity {
         return recipe.getSteps().get(position).getStepTime();
 
     }
+
 }
