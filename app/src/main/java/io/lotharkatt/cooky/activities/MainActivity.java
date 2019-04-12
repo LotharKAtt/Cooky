@@ -1,86 +1,96 @@
 package io.lotharkatt.cooky.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.CountDownTimer;
-import android.os.Vibrator;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ProgressBar;
+
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import io.lotharkatt.cooky.R;
+import io.lotharkatt.cooky.adapters.RecipeAdapter;
+import io.lotharkatt.cooky.models.Recipe;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipeAdapter.OnClickListener {
 
-    private Button addRecipe, recipeList, btnAbout;
-    private Vibrator v;
-    CountDownTimer countDownTimer;
-    private TextView tvTimer;
+    private RecyclerView recyclerView;
+    private RecipeAdapter adapter;
+    private List<Recipe> recipeList;
+    private ProgressBar progressBar;
+    private FirebaseFirestore db;
+
+    public MainActivity() {
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressBar = findViewById(R.id.progressbar);
 
-        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        recyclerView = findViewById(R.id.recyclerview_recipes);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        tvTimer = (TextView) findViewById(R.id.tvTimer);
-        addRecipe = (Button) findViewById(R.id.buttonAddRecipe);
-        addRecipe.setOnClickListener(new View.OnClickListener() {
+        recipeList = new ArrayList<>();
+        adapter = new RecipeAdapter(this, recipeList);
+
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickLIstener(new RecipeAdapter.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                openRecipeActivity();
-
+            public void onItemClick(int position) {
+                Intent intent = new Intent(MainActivity.this, RecipeOverview.class);
+                intent.putExtra("Item", recipeList.get(position));
+                startActivity(intent);
             }
         });
 
-
-        recipeList = (Button) findViewById(R.id.buttonRecipeList);
-        recipeList.setOnClickListener(new View.OnClickListener() {
+        db = FirebaseFirestore.getInstance();
+        db.collection("recipes").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onClick(View v) {
-                openRecipeListActivity();
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                progressBar.setVisibility(View.GONE);
 
+                if (!queryDocumentSnapshots.isEmpty()) {
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for (DocumentSnapshot d : list) {
+                        Recipe r = d.toObject(Recipe.class);
+                        recipeList.add(r);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
-        btnAbout = (Button) findViewById(R.id.buttonAbout);
-        btnAbout.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabAddRecipe = (FloatingActionButton) findViewById(R.id.fabAddRecipe);
+        fabAddRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                countDownTimer.start();
+            public void onClick(View view) {
+                openAddRecipeActivity();
+
             }
         });
-
-        countDownTimer = new CountDownTimer(30000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                tvTimer.setText("seconds remaining: " + millisUntilFinished / 1000);
-
-            }
-
-            @Override
-            public void onFinish() {
-                tvTimer.setText("done!");
-                v.vibrate(400);
-
-
-            }
-        };
     }
 
-    private void openRecipeListActivity() {
-        Intent intent = new Intent(this, RecipesListActivity.class);
-        startActivity(intent);
-    }
-
-    private void openRecipeActivity() {
+    private void openAddRecipeActivity() {
         Intent intent = new Intent(this, AddRecipeActivity.class);
         startActivity(intent);
-        v.vibrate(400);
-
     }
 
+
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }

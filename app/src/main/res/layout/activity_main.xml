@@ -1,45 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <Button
-        android:id="@+id/buttonAddRecipe"
+    <include layout="@layout/content_recipe_list" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabAddRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Add Recipe"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="161dp" />
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:tint="@android:color/white"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
-    <Button
-        android:id="@+id/buttonRecipeList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="RecipeList"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddRecipe"
-        tools:layout_editor_absoluteX="161dp" />
-
-    <Button
-        android:id="@+id/buttonAbout"
-        android:layout_width="100dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:text="About"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRecipeList"
-        tools:layout_editor_absoluteX="159dp" />
-
-    <TextView
-        android:id="@+id/tvTimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAbout"
-        tools:layout_editor_absoluteX="139dp" />
-
-</android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>

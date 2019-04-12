@@ -239,7 +239,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             }
         });
 
-
+        // TODO add tag system
         tags.add("karel");
 
 
@@ -265,10 +265,9 @@ public class AddRecipeActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(AddRecipeActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 
-
                     }
                 });
-
+                finish();
             }
         });
     }
