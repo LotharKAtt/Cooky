@@ -16,6 +16,7 @@ public class Recipe implements Parcelable {
     String author;
     String description;
     String course;
+    String imageUrl;
     int globalTime;
     // TODO: add timestamp for recipes
     //private @ServerTimestamp Date timestamp
@@ -27,16 +28,25 @@ public class Recipe implements Parcelable {
     }
 
 
-    public Recipe(String name, String author, String description, String course, int globalTime, List<String> tags, List<Ingredient> ingredients, List<Step> steps) {
+    public Recipe(String name, String author, String description, String course, String imageUrl, int globalTime, List<String> tags, List<Ingredient> ingredients, List<Step> steps) {
         this.name = name;
         this.author = author;
         this.description = description;
         this.course = course;
+        this.imageUrl = imageUrl;
         this.globalTime = globalTime;
         this.tags = tags;
         this.steps = steps;
         this.ingredients = ingredients;
 
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public List<Ingredient> getIngredients() {
@@ -204,6 +214,7 @@ public class Recipe implements Parcelable {
         dest.writeString(this.author);
         dest.writeString(this.description);
         dest.writeString(this.course);
+        dest.writeString(this.imageUrl);
         dest.writeInt(this.globalTime);
         dest.writeTypedList(this.ingredients);
         dest.writeStringList(this.tags);
@@ -215,6 +226,7 @@ public class Recipe implements Parcelable {
         this.author = in.readString();
         this.description = in.readString();
         this.course = in.readString();
+        this.imageUrl = in.readString();
         this.globalTime = in.readInt();
         this.ingredients = in.createTypedArrayList(Ingredient.CREATOR);
         this.tags = in.createStringArrayList();

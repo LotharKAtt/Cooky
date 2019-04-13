@@ -55,8 +55,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
                 startActivity(intent);
             }
         });
-
         db = FirebaseFirestore.getInstance();
+
         db.collection("recipes").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

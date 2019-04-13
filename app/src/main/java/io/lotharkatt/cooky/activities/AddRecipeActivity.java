@@ -1,17 +1,25 @@
 package io.lotharkatt.cooky.activities;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -19,10 +27,17 @@ import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +46,14 @@ import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.models.Recipe;
 
 public class AddRecipeActivity extends AppCompatActivity {
-    Button buttonSubmit, buttonAddIngredient, buttonAddStep;
+    Button buttonChosseImage, buttonUploadImage, buttonSubmit, buttonAddIngredient, buttonAddStep;
     EditText editTextName, editTextAuthor, editTextDescription, editTextTags, editTextIngredientNameIn, editTextIngredientQuantityIn, editTextStepDescriptionIn, editTextStepTimeIn;
     Spinner spinnerCourse, spinnerIngredientIn;
+    ImageView imageViewUpload;
     FirebaseFirestore db;
+    StorageReference storageReference;
+    StorageTask storageTask;
+    Uri imageUri;
 
     CheckBox checkBoxStepTimerIn, checkBoxStepTimerOut;
     List<String> tags = new ArrayList<>();
@@ -43,9 +62,13 @@ public class AddRecipeActivity extends AppCompatActivity {
     LinearLayout containerIngredient, containerStep;
     String[] unitsResources;
     Boolean timerAllowed = false;
-    String ingredientUnit, course;
+    String ingredientUnit, course, imageUrl;
     int ingredientPosition;
     int globalTime;
+
+
+    static final int PICK_IMAGE_REQUEST = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +93,31 @@ public class AddRecipeActivity extends AppCompatActivity {
         String tagString = editTextTags.getText().toString();
 
 
+        buttonChosseImage = (Button) findViewById(R.id.buttonChooseFromGalery);
+        buttonUploadImage = (Button) findViewById(R.id.buttonUploadToFirebase);
+        imageViewUpload = (ImageView) findViewById(R.id.imageViewUploadImage);
+
+        storageReference = FirebaseStorage.getInstance().getReference("recipes");
+
+
+        buttonChosseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFileChooser();
+            }
+        });
+
+        buttonUploadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (storageTask != null && storageTask.isInProgress()) {
+                    Toast.makeText(AddRecipeActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadFile();
+                }
+
+            }
+        });
 
         spinnerCourse = (Spinner) findViewById(R.id.spinnerCourse);
         String[] courseResource = getResources().getStringArray(R.array.course);
@@ -256,7 +304,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String description = editTextDescription.getText().toString().trim();
 
                 CollectionReference dbRec = db.collection("recipes");
-                Recipe recipe = new Recipe(name, author, description, course, globalTime, tags, ingredients, steps);
+                Recipe recipe = new Recipe(name, author, description, course, imageUrl, globalTime, tags, ingredients, steps);
 
                 // TODO: Validation
                 dbRec.add(recipe)
@@ -277,4 +325,62 @@ public class AddRecipeActivity extends AppCompatActivity {
         });
     }
 
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    private void uploadFile() {
+        if (imageUri != null) {
+
+            StorageReference fileRef = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
+
+            storageTask = fileRef.putFile(imageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Task<Uri> task = taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                            task.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    imageUrl = uri.toString();
+                                }
+                            });                            Toast.makeText(AddRecipeActivity.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddRecipeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            imageUrl = "Not Found";
+                        }
+                    })
+                    // TODO: If time
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        }
+                    });
+        } else {
+            Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            Picasso.get().load(imageUri).fit().into(imageViewUpload);
+        }
+    }
 }

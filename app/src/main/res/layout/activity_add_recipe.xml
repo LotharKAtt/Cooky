@@ -45,6 +45,24 @@
             android:hint="tag"
             android:textSize="24sp" />
 
+        <Button
+            android:id="@+id/buttonChooseFromGalery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="chose from galler" />
+
+
+        <Button
+            android:id="@+id/buttonUploadToFirebase"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="upload" />
+
+        <ImageView
+            android:id="@+id/imageViewUploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="450dp" />
+
 
         <Spinner
             android:id="@+id/spinnerCourse"
@@ -115,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="Add"/>
+                    android:text="Add" />
 
             </RelativeLayout>
 
