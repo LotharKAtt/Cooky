@@ -12,27 +12,27 @@ public class IntroActivity extends AppIntro {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: ASK ABOUT PERMITION, RUN ONLY ONCE
-        // TODO SPLASHER?
+        // TODO: ASK ABOUT PERMISSION, RUN ONLY ONCE
+        // TODO SPLASHER
 
         SliderPage selectPage = new SliderPage();
         selectPage.setTitle("Select recipe");
-        selectPage.setDescription("Decripiton");
-        selectPage.setImageDrawable(R.drawable.ic_appintro_navigate_before_white);
+        selectPage.setDescription("Find food what you are like.");
+        selectPage.setImageDrawable(R.mipmap.ic_launcher);
         selectPage.setBgColor(getColor(R.color.colorPrimary));
         addSlide(AppIntroFragment.newInstance(selectPage));
 
         SliderPage preparePage = new SliderPage();
         preparePage.setTitle("Prepare ingredients");
-        preparePage.setDescription("Decripiton");
-        preparePage.setImageDrawable(R.drawable.ic_appintro_navigate_before_white);
-        preparePage.setBgColor(getColor(R.color.colorPrimary));
+        preparePage.setDescription("Prepare all ingredients what are necessary for recipe.");
+        preparePage.setImageDrawable(R.mipmap.ic_launcher);
+        preparePage.setBgColor(getColor(R.color.colorPrimaryDark));
         addSlide(AppIntroFragment.newInstance(preparePage));
 
         SliderPage eatPage = new SliderPage();
         eatPage.setTitle("Eat Food");
-        eatPage.setDescription("Decripiton");
-        eatPage.setImageDrawable(R.drawable.ic_appintro_navigate_before_white);
+        eatPage.setDescription("... and Profit!");
+        eatPage.setImageDrawable(R.mipmap.ic_launcher);
         eatPage.setBgColor(getColor(R.color.colorPrimary));
         addSlide(AppIntroFragment.newInstance(eatPage));
 

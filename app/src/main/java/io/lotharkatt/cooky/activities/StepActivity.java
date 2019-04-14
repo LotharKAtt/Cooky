@@ -5,9 +5,11 @@ import androidx.fragment.app.FragmentActivity;
 import android.os.Bundle;
 import androidx.viewpager.widget.ViewPager;
 import android.view.View;
+import android.widget.Button;
 
 import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.adapters.SwipeAdapter;
+import io.lotharkatt.cooky.fragments.StepFragment;
 import io.lotharkatt.cooky.models.Recipe;
 
 public class StepActivity extends FragmentActivity {
@@ -15,6 +17,7 @@ public class StepActivity extends FragmentActivity {
     SwipeAdapter swipeAdapter;
     ViewPager swipePager;
     Recipe recipe;
+    Button buttonGoBack, buttonGoNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +32,19 @@ public class StepActivity extends FragmentActivity {
         swipeAdapter = new SwipeAdapter(getSupportFragmentManager(), this);
         swipePager.setAdapter(swipeAdapter);
 
-
-            findViewById(R.id.goto_back).setOnClickListener(new View.OnClickListener() {
+        buttonGoBack = findViewById(R.id.goto_back);
+        buttonGoBack.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    swipePager.setCurrentItem(0);
                 }
             });
 
-        findViewById(R.id.goto_next).setOnClickListener(new View.OnClickListener() {
+
+        buttonGoNext.findViewById(R.id.goto_next);
+        buttonGoNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                swipePager.setCurrentItem(0);
+
             }
         });
     }

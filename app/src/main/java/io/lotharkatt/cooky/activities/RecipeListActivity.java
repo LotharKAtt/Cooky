@@ -1,11 +1,16 @@
 package io.lotharkatt.cooky.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -36,6 +41,34 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
+
+                if (isFirstStart) {
+
+                    final Intent intent = new Intent(RecipeListActivity.this, IntroActivity.class);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(intent);
+                        }
+                    });
+
+                    SharedPreferences.Editor e = getPrefs.edit();
+
+                    e.putBoolean("firstStart", false);
+                    e.apply();
+                }
+            }
+        });
+
+        t.start();
+
         setContentView(R.layout.activity_recipe_list);
         progressBar = findViewById(R.id.progressbar);
 

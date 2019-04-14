@@ -3,6 +3,7 @@ package io.lotharkatt.cooky.activities;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -80,9 +82,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_recipe);
 
         // TODO ADD BACK BUTTONS
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
         db = FirebaseFirestore.getInstance();
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         editTextAuthor = (EditText) findViewById(R.id.editTextAuthor);
@@ -96,6 +95,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         buttonChosseImage = (Button) findViewById(R.id.buttonChooseFromGalery);
         buttonUploadImage = (Button) findViewById(R.id.buttonUploadToFirebase);
         imageViewUpload = (ImageView) findViewById(R.id.imageViewUploadImage);
+        imageViewUpload.setVisibility(View.GONE);
 
         storageReference = FirebaseStorage.getInstance().getReference("recipes");
 
@@ -373,6 +373,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        imageViewUpload.setVisibility(View.VISIBLE);
     }
 
     @Override

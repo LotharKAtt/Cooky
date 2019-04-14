@@ -26,7 +26,8 @@
         <activity android:name=".activities.StepActivity" />
         <activity android:name=".activities.RecipeOverview" />
         <activity android:name=".activities.AddRecipeActivity" />
-        <!--<activity android:name=".activities.RecipeListActivity" />-->
+        <activity android:name=".activities.IntroActivity" />
+
 
     </application>
 
