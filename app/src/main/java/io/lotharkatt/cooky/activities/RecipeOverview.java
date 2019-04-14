@@ -94,7 +94,6 @@ public class RecipeOverview extends AppCompatActivity {
         btnCook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(RecipeOverview.this, "Test Click", Toast.LENGTH_LONG).show();
                 openStepActivity();
             }
         });

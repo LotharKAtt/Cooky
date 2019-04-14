@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +18,10 @@ import io.lotharkatt.cooky.models.Recipe;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-
     private Context mCtx;
     private List<Recipe> recipeList;
     private static final String TAG = "RecipeAdapter";
     private OnClickListener mListner;
-
 
     public RecipeAdapter(Context mCtx, List<Recipe> recipeList) {
         this.mCtx = mCtx;

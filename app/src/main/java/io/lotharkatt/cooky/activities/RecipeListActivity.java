@@ -13,14 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.adapters.RecipeAdapter;
@@ -32,7 +39,9 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
     private RecipeAdapter adapter;
     private List<Recipe> recipeList;
     private ProgressBar progressBar;
-    private FirebaseFirestore db;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference recipesRef = db.collection("recipes");
+
 
     public RecipeListActivity() {
     }
@@ -88,13 +97,31 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
                 startActivity(intent);
             }
         });
-        db = FirebaseFirestore.getInstance();
 
-        db.collection("recipes").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        FloatingActionButton fabAddRecipe = (FloatingActionButton) findViewById(R.id.fabAddRecipe);
+        fabAddRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                progressBar.setVisibility(View.GONE);
+            public void onClick(View view) {
+                openAddRecipeActivity();
 
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recipesRef.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Toast.makeText(RecipeListActivity.this, "Error during fetching", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+                progressBar.setVisibility(View.GONE);
+                // FIXME: There must be better opition
+                recipeList.clear();
                 if (!queryDocumentSnapshots.isEmpty()) {
                     List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                     for (DocumentSnapshot d : list) {
@@ -106,14 +133,6 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
             }
         });
 
-        FloatingActionButton fabAddRecipe = (FloatingActionButton) findViewById(R.id.fabAddRecipe);
-        fabAddRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddRecipeActivity();
-
-            }
-        });
     }
 
     private void openAddRecipeActivity() {

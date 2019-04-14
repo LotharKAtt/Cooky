@@ -9,7 +9,6 @@ import android.widget.Button;
 
 import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.adapters.SwipeAdapter;
-import io.lotharkatt.cooky.fragments.StepFragment;
 import io.lotharkatt.cooky.models.Recipe;
 
 public class StepActivity extends FragmentActivity {
@@ -32,18 +31,30 @@ public class StepActivity extends FragmentActivity {
         swipeAdapter = new SwipeAdapter(getSupportFragmentManager(), this);
         swipePager.setAdapter(swipeAdapter);
 
+
         buttonGoBack = findViewById(R.id.goto_back);
+
+        buttonGoBack.setVisibility(View.INVISIBLE);
         buttonGoBack.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    swipePager.setCurrentItem(0);
+                    swipeAdapter.getItem(swipePager.getCurrentItem() -1);
                 }
             });
 
+        buttonGoNext = findViewById(R.id.goto_next);
 
-        buttonGoNext.findViewById(R.id.goto_next);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(swipePager.getCurrentItem() == 1){
+            buttonGoBack.setVisibility(View.VISIBLE);
+
+        }
         buttonGoNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                swipePager.setCurrentItem(0);
+                swipeAdapter.getItem(swipePager.getCurrentItem() +1);
 
             }
         });

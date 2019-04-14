@@ -1,17 +1,24 @@
 package io.lotharkatt.cooky.fragments;
 
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
 import androidx.fragment.app.Fragment;
+
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
 import io.lotharkatt.cooky.R;
+import io.lotharkatt.cooky.models.Recipe;
 
 
 public class StepFragment extends Fragment implements View.OnClickListener {
@@ -63,7 +70,8 @@ public class StepFragment extends Fragment implements View.OnClickListener {
 
         textViewAlarm = (TextView) v.findViewById(R.id.textViewAlarm);
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-
+        Uri defaultRingtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(getContext(),defaultRingtoneUri);
 
         btnAlarm = (Button) v.findViewById(R.id.btnAlarm);
         btnAlarm.setOnClickListener(this);
@@ -84,7 +92,8 @@ public class StepFragment extends Fragment implements View.OnClickListener {
             public void onFinish() {
                 textViewAlarm.setText("done!");
                 // TODO add sound notification, push notification
-                vibrator.vibrate(400);
+                vibrator.vibrate(5000);
+                mediaPlayer.start();
             }
         };
 

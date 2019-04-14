@@ -32,6 +32,7 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
         Integer index = page_indexes.get(position);
         return StepFragment.newInstance(index, stepActivity.getStep(position), stepActivity.getTime(position), stepActivity.getTimer(position));
 
+
     }
 
     @Override
