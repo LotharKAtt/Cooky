@@ -1,5 +1,6 @@
 package io.lotharkatt.cooky.adapters;
 
+
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
@@ -22,7 +23,7 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
         this.stepActivity = stepActivity;
 
         page_indexes = new ArrayList<>();
-        for (int i = 0; i < stepActivity.getNumberOfStep(); i++) {
+        for (int i = 0; i < (stepActivity.getNumberOfStep() +1); i++) {
             page_indexes.add(i);
         }
     }
@@ -30,6 +31,13 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Integer index = page_indexes.get(position);
+
+
+        Log.d("Kompitech", "getItem: " +  index + "sdasdafasf saxf" + getCount());
+        if (position == (getCount()-1)){
+            return ReviewFragment.newInstance("sas","asas");
+        }
+
         return StepFragment.newInstance(index, stepActivity.getStep(position), stepActivity.getTime(position), stepActivity.getTimer(position));
 
 

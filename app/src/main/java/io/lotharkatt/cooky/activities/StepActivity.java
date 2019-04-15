@@ -32,6 +32,7 @@ public class StepActivity extends FragmentActivity {
         swipePager.setAdapter(swipeAdapter);
 
 
+
         buttonGoBack = findViewById(R.id.goto_back);
 
         buttonGoBack.setVisibility(View.INVISIBLE);
