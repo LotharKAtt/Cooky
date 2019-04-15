@@ -68,7 +68,7 @@ public class RecipeOverview extends AppCompatActivity {
             ingredientName = ingredient.getIngredientName();
             ingredientQuantity = ingredient.getIngredientQuantity();
             getIngredientUnit = ingredient.getIngredientUnit();
-            textViewIngredient.append(ingredient.getIngredientQuantity() + " " + ingredient.getIngredientUnit() + " ==" + ingredient.getIngredientName());
+            textViewIngredient.append(ingredient.getIngredientQuantity() + " " + ingredient.getIngredientUnit() + " " + ingredient.getIngredientName());
             textViewIngredient.append("\n");
 
 
