@@ -36,6 +36,9 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.skyhope.materialtagview.TagView;
+import com.skyhope.materialtagview.interfaces.TagItemListener;
+import com.skyhope.materialtagview.model.TagModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -46,7 +49,7 @@ import io.lotharkatt.cooky.models.Recipe;
 
 public class AddRecipeActivity extends AppCompatActivity {
     Button buttonChosseImage, buttonUploadImage, buttonSubmit, buttonAddIngredient, buttonAddStep;
-    EditText editTextName, editTextAuthor, editTextDescription, editTextTags, editTextIngredientNameIn, editTextIngredientQuantityIn, editTextStepDescriptionIn, editTextStepTimeIn;
+    EditText editTextName, editTextAuthor, editTextDescription, editTextIngredientNameIn, editTextIngredientQuantityIn, editTextStepDescriptionIn, editTextStepTimeIn;
     Spinner spinnerCourse, spinnerIngredientIn;
     ImageView imageViewUpload;
     FirebaseFirestore db;
@@ -64,6 +67,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     String ingredientUnit, footCourse, imageUrl;
     int ingredientPosition;
     int globalTime;
+    TagView tagViewTags;
 
 
     static final int PICK_IMAGE_REQUEST = 1;
@@ -84,9 +88,25 @@ public class AddRecipeActivity extends AppCompatActivity {
         editTextAuthor = (EditText) findViewById(R.id.editTextAuthor);
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextDescription = (EditText) findViewById(R.id.editTextDescription);
-        editTextTags = (EditText) findViewById(R.id.editTextTag);
-        // TODO: separate tags from one long string to list
-        String tagString = editTextTags.getText().toString();
+
+        tagViewTags = (TagView) findViewById(R.id.tagViewTags);
+        tagViewTags.addTagLimit(10);
+        String[] tagList = new String[]{"Raw", "Sweet", "Vegan"};
+        tagViewTags.setTagList(tagList);
+
+        tagViewTags.initTagListener(new TagItemListener() {
+            @Override
+            public void onGetAddedItem(TagModel tagModel) {
+                tags.add(tagModel.getTagText());
+            }
+
+            @Override
+            public void onGetRemovedItem(TagModel model) {
+                tags.remove(model.getTagText());
+
+            }
+        });
+
 
 
         buttonChosseImage = (Button) findViewById(R.id.buttonChooseFromGalery);
@@ -288,10 +308,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                 steps.add(step);
             }
         });
-
-        // TODO add tag system
-        tags.add("karel");
-
 
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -40,13 +40,17 @@
             android:hint="Description of recipe"
             android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/editTextTag"
+        <com.skyhope.materialtagview.TagView
+            android:id="@+id/tagViewTags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="tag"
-            android:textSize="24sp" />
+            android:hint="Add tags divided by comma"
+            android:textSize="24sp"
+            app:tag_background_color="@color/colorPrimary"
+            app:tag_separator="COMMA_SEPARATOR"
+
+            />
+
 
         <Button
             android:id="@+id/buttonChooseFromGalery"
@@ -122,10 +126,10 @@
 
                 <Spinner
                     android:id="@+id/spinnerIngredientIn"
-                    android:layout_width="85dp"
-                    android:layout_height="38dp"
+                    android:layout_width="67dp"
+                    android:layout_height="48dp"
                     android:layout_marginStart="3dp"
-                    android:layout_marginEnd="179dp"
+                    android:layout_marginEnd="160dp"
                     android:layout_marginRight="20dp"
                     android:layout_toStartOf="@+id/add"
                     android:entries="@array/ingredientUnit" />

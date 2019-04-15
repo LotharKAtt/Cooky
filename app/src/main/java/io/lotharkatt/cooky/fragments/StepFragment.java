@@ -9,16 +9,13 @@ import android.os.CountDownTimer;
 import android.os.Vibrator;
 import androidx.fragment.app.Fragment;
 
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentActivity;
 import io.lotharkatt.cooky.R;
-import io.lotharkatt.cooky.models.Recipe;
 
 
 public class StepFragment extends Fragment implements View.OnClickListener {
