@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 
 import io.lotharkatt.cooky.activities.StepActivity;
+import io.lotharkatt.cooky.fragments.ReviewFragment;
 import io.lotharkatt.cooky.fragments.StepFragment;
 
 public class SwipeAdapter extends FragmentStatePagerAdapter {

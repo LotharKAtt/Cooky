@@ -81,7 +81,7 @@ public class StepFragment extends Fragment implements View.OnClickListener {
             textViewAlarm.setVisibility(View.GONE);
 
         }
-        countDownTimer = new CountDownTimer((stepTime * 1000), 1000) {
+            countDownTimer = new CountDownTimer((stepTime * 60 * 1000), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 textViewAlarm.setText("Remaining: \n" + millisUntilFinished / 1000);
