@@ -3,7 +3,6 @@ package io.lotharkatt.cooky.activities;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -25,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -64,7 +61,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     LinearLayout containerIngredient, containerStep;
     String[] unitsResources;
     Boolean timerAllowed = false;
-    String ingredientUnit, course, imageUrl;
+    String ingredientUnit, footCourse, imageUrl;
     int ingredientPosition;
     int globalTime;
 
@@ -126,7 +123,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         spinnerCourse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                course = parent.getSelectedItem().toString();
+                footCourse = parent.getSelectedItem().toString();
 
             }
 
@@ -304,7 +301,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String description = editTextDescription.getText().toString().trim();
 
                 CollectionReference dbRec = db.collection("recipes");
-                Recipe recipe = new Recipe(name, author, description, course, imageUrl, globalTime, tags, ingredients, steps);
+                Recipe recipe = new Recipe(name, author, description, footCourse, imageUrl, globalTime, tags, ingredients, steps);
 
                 // TODO: Validation
                 dbRec.add(recipe)
@@ -346,7 +343,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     imageUrl = uri.toString();
                                 }
-                            });                            Toast.makeText(AddRecipeActivity.this, "Upload Successful", Toast.LENGTH_SHORT).show();
+                            });
+                            Toast.makeText(AddRecipeActivity.this, "Upload Successful", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
