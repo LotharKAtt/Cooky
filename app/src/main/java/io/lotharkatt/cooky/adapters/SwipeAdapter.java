@@ -33,7 +33,6 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
         Integer index = page_indexes.get(position);
 
 
-        Log.d("Kompitech", "getItem: " +  index + "sdasdafasf saxf" + getCount());
         if (position == (getCount()-1)){
             return ReviewFragment.newInstance("sas","asas");
         }

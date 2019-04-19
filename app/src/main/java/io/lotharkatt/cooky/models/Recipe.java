@@ -10,8 +10,6 @@ import java.util.List;
  * Recipe class store definition for Recipe object
  */
 public class Recipe implements Parcelable {
-
-
     String name;
     String author;
     String description;

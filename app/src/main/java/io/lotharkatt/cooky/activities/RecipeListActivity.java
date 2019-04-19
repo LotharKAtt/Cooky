@@ -1,23 +1,16 @@
 package io.lotharkatt.cooky.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,6 +22,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.adapters.RecipeAdapter;
 import io.lotharkatt.cooky.models.Recipe;
@@ -50,42 +46,20 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SharedPreferences getPrefs = PreferenceManager
-                        .getDefaultSharedPreferences(getBaseContext());
-                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
 
-                if (isFirstStart) {
-
-                    final Intent intent = new Intent(RecipeListActivity.this, IntroActivity.class);
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            startActivity(intent);
-                        }
-                    });
-
-                    SharedPreferences.Editor e = getPrefs.edit();
-
-                    e.putBoolean("firstStart", false);
-                    e.apply();
-                }
-            }
-        });
-
-        t.start();
 
         setContentView(R.layout.activity_recipe_list);
+        
         progressBar = findViewById(R.id.progressbar);
-
+        
         recyclerView = findViewById(R.id.recyclerview_recipes);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         recipeList = new ArrayList<>();
+
+
+
         adapter = new RecipeAdapter(this, recipeList);
 
         recyclerView.setAdapter(adapter);
@@ -96,7 +70,10 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
                 intent.putExtra("Item", recipeList.get(position));
                 startActivity(intent);
             }
+
+
         });
+
 
         FloatingActionButton fabAddRecipe = (FloatingActionButton) findViewById(R.id.fabAddRecipe);
         fabAddRecipe.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +84,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
             }
         });
     }
+
+
 
     @Override
     protected void onStart() {
@@ -122,6 +101,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
                 progressBar.setVisibility(View.GONE);
                 // FIXME: There must be better opition
                 recipeList.clear();
+
                 if (!queryDocumentSnapshots.isEmpty()) {
                     List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                     for (DocumentSnapshot d : list) {
@@ -140,9 +120,14 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeAdapt
         startActivity(intent);
     }
 
-
     @Override
     public void onItemClick(int position) {
 
     }
+
+//
+//    @Override
+//    public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+//
+//    }
 }

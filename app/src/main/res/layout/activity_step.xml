@@ -13,22 +13,5 @@ android:layout_width="match_parent" android:layout_height="match_parent">
 <LinearLayout android:orientation="horizontal"
     android:gravity="center" android:measureWithLargestChild="true"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:layout_weight="0">
-
-    <!--go to the first page in the view pager-->
-    <Button
-        android:id="@+id/goto_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"></Button>
-
-    <!--Delete the current page-->
-
-    <!--go to the last page in the view pager-->
-    <Button
-        android:id="@+id/goto_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next"></Button>
-</LinearLayout>
+    android:layout_weight="0"/>
 </LinearLayout>

@@ -5,9 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
-    android:padding="16dp"
-
-    >
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,7 +42,6 @@
             android:id="@+id/tagViewTags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Add tags divided by comma"
             android:textSize="24sp"
             app:tag_background_color="@color/colorPrimary"
             app:tag_separator="COMMA_SEPARATOR"

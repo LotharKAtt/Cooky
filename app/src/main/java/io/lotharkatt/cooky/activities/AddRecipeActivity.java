@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +41,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.models.Recipe;
 
@@ -316,11 +316,11 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String author = editTextAuthor.getText().toString().trim();
                 String description = editTextDescription.getText().toString().trim();
 
-                CollectionReference dbRec = db.collection("recipes");
+                CollectionReference recipeRec = db.collection("recipes");
                 Recipe recipe = new Recipe(name, author, description, footCourse, imageUrl, globalTime, tags, ingredients, steps);
 
                 // TODO: Validation
-                dbRec.add(recipe)
+                recipeRec.add(recipe)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
@@ -343,6 +343,8 @@ public class AddRecipeActivity extends AppCompatActivity {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
+
+
 
     private void uploadFile() {
         if (imageUri != null) {
@@ -398,4 +400,5 @@ public class AddRecipeActivity extends AppCompatActivity {
             Picasso.get().load(imageUri).fit().into(imageViewUpload);
         }
     }
+
 }

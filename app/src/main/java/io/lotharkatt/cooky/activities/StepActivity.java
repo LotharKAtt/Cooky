@@ -1,9 +1,13 @@
 package io.lotharkatt.cooky.activities;
 
 import android.content.Intent;
+
 import androidx.fragment.app.FragmentActivity;
+
 import android.os.Bundle;
+
 import androidx.viewpager.widget.ViewPager;
+
 import android.view.View;
 import android.widget.Button;
 
@@ -16,7 +20,6 @@ public class StepActivity extends FragmentActivity {
     SwipeAdapter swipeAdapter;
     ViewPager swipePager;
     Recipe recipe;
-    Button buttonGoBack, buttonGoNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,35 +34,8 @@ public class StepActivity extends FragmentActivity {
         swipeAdapter = new SwipeAdapter(getSupportFragmentManager(), this);
         swipePager.setAdapter(swipeAdapter);
 
-
-
-        buttonGoBack = findViewById(R.id.goto_back);
-
-        buttonGoBack.setVisibility(View.INVISIBLE);
-        buttonGoBack.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    swipeAdapter.getItem(swipePager.getCurrentItem() -1);
-                }
-            });
-
-        buttonGoNext = findViewById(R.id.goto_next);
-
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(swipePager.getCurrentItem() == 1){
-            buttonGoBack.setVisibility(View.VISIBLE);
-
-        }
-        buttonGoNext.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                swipeAdapter.getItem(swipePager.getCurrentItem() +1);
-
-            }
-        });
-    }
 
     public String getStep(int position) {
         return recipe.getSteps().get(position).getStepDescription();
@@ -79,5 +55,6 @@ public class StepActivity extends FragmentActivity {
         return recipe.getSteps().get(position).getStepTime();
 
     }
+
 
 }
