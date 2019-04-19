@@ -1,15 +1,11 @@
 package io.lotharkatt.cooky.activities;
 
-import android.content.Intent;
-
-import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.viewpager.widget.ViewPager;
-
-import android.view.View;
-import android.widget.Button;
+import androidx.fragment.app.FragmentActivity;
 
 import io.lotharkatt.cooky.R;
 import io.lotharkatt.cooky.adapters.SwipeAdapter;
@@ -20,27 +16,38 @@ public class StepActivity extends FragmentActivity {
     SwipeAdapter swipeAdapter;
     ViewPager swipePager;
     Recipe recipe;
+    String id;
+
+    public StepActivity() {
+
+    }
+
+    public StepActivity(String id) {
+        this.id = id;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
 
-        Intent intent = getIntent();
-        recipe = (Recipe) intent.getParcelableExtra("Recipe");
-
+        recipe = getIntent().getExtras().getParcelable("Item");
+        id = getIntent().getExtras().getString("id");
 
         swipePager = findViewById(R.id.pager);
         swipeAdapter = new SwipeAdapter(getSupportFragmentManager(), this);
         swipePager.setAdapter(swipeAdapter);
-
     }
 
 
     public String getStep(int position) {
         return recipe.getSteps().get(position).getStepDescription();
-
     }
+
+    public String getId() {
+        return id;
+    }
+
 
     public int getNumberOfStep() {
         return recipe.getSteps().size();

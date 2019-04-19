@@ -1,6 +1,8 @@
 package io.lotharkatt.cooky.activities;
+
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
 import com.github.paolorotolo.appintro.model.SliderPage;
@@ -47,14 +49,13 @@ public class IntroActivity extends AppIntro {
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-        Intent intent = new Intent(this, RecipeListActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, MainActivity.class));
 
     }
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        Intent intent = new Intent(this, RecipeListActivity.class);
-        startActivity(intent);    }
+        startActivity(new Intent(this, MainActivity.class));
+    }
 }

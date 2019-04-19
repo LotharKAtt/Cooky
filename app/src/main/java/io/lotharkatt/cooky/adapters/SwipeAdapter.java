@@ -1,7 +1,6 @@
 package io.lotharkatt.cooky.adapters;
 
 
-import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -34,7 +33,7 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
 
 
         if (position == (getCount()-1)){
-            return ReviewFragment.newInstance("sas","asas");
+            return ReviewFragment.newInstance(stepActivity.getId());
         }
 
         return StepFragment.newInstance(index, stepActivity.getStep(position), stepActivity.getTime(position), stepActivity.getTimer(position));

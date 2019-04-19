@@ -3,12 +3,14 @@ package io.lotharkatt.cooky.models;
 public class Review {
     String author;
     String feedBackMessage;
+    String recipeID;
 
     public Review(){}
 
-    public Review(String author, String feedBackMessage) {
+    public Review(String author, String feedBackMessage, String recipeID) {
         this.author = author;
         this.feedBackMessage = feedBackMessage;
+        this.recipeID = recipeID;
     }
 
     public String getAuthor() {
