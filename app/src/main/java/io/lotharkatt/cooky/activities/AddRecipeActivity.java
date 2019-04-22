@@ -78,8 +78,6 @@ public class AddRecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         FirebaseApp.initializeApp(this);
-
-
         setContentView(R.layout.activity_add_recipe);
 
         // TODO ADD BACK BUTTONS
