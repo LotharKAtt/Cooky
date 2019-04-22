@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,10 +22,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-    Button buttonLogin;
-    EditText editTextEmail, editTextPassword;
-    FirebaseAuth auth;
-    FirebaseAuth.AuthStateListener authStateListener;
+    private Button buttonLogin, buttonRegistration;
+    private EditText editTextEmail, editTextPassword;
+    private TextView textViewForgottenPassword;
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+        textViewForgottenPassword = findViewById(R.id.textViewForgottenPassword);
+        textViewForgottenPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,PasswordActivity.class));
+            }
+        });
+
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -84,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buttonRegistration = findViewById(R.id.buttonRegitration);
+        buttonRegistration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,RegistrationActivity.class));
+            }
+        });
 
     }
 
