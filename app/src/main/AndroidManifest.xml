@@ -18,12 +18,12 @@
         <activity android:name=".activities.StepActivity" />
         <activity android:name=".activities.RecipeOverview" />
         <activity android:name=".activities.AddRecipeActivity" />
-        <activity android:name=".activities.IntroActivity" />
+        <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.RecipeListActivity" />
         <activity android:name=".activities.RegistrationActivity" />
         <activity android:name=".activities.PasswordActivity" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.IntroActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
