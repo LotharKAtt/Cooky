@@ -188,7 +188,7 @@
                     android:layout_marginTop="0dp"
                     android:layout_marginRight="35dp"
                     android:layout_toLeftOf="@+id/steptimerin"
-                    android:hint="Step time" />
+                    android:hint="Step time (In Mins)" />
 
                 <CheckBox
                     android:id="@id/steptimerin"

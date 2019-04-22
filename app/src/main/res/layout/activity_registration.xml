@@ -4,23 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".activities.RegistrationActivity">
 
     <ImageView
-    android:id="@+id/imageView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:srcCompat="@drawable/cooky_logo" />
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/cooky_logo" />
 
     <EditText
         android:id="@+id/editTextRegEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName" />
+        android:hint="Email" />
 
     <EditText
         android:id="@+id/editTextRegPassword"
@@ -28,7 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextRegEmail"
         android:ems="10"
-        android:hint="Password" />
+        android:hint="Password"
+        android:password="true" />
+
 
     <EditText
         android:id="@+id/editTextRegConfirmPassword"
@@ -36,8 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editTextRegPassword"
         android:ems="10"
-        android:hint="Confirm password" />
-
+        android:hint="Confirm password"
+        android:password="true" />
 
     <Button
         android:id="@+id/buttonRegister"

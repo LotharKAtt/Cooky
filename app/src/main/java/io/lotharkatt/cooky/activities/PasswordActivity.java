@@ -37,7 +37,7 @@ public class PasswordActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(PasswordActivity.this, "Your password has been successfully reset, check your mailbox.", Toast.LENGTH_LONG).show();
                                 } else {
-                                    Toast.makeText(PasswordActivity.this, "Something wrong happen please try it again.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(PasswordActivity.this, "Something went wrong, please try it again.", Toast.LENGTH_LONG).show();
                                 }
                             }
                         });

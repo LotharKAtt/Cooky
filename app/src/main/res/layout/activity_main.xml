@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity"
     android:orientation="vertical"
+    android:gravity="center"
     android:padding="16dp">
 
     <ImageView
@@ -48,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textViewForgottenPassword"
         android:layout_marginTop="6dp"
-        android:text="Sign in email" />
+        android:text="Sign in via email" />
     <Button
         android:id="@+id/buttonRegitration"
         android:layout_width="match_parent"
