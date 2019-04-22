@@ -6,9 +6,12 @@ import android.os.Bundle;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -96,7 +99,24 @@ public class RecipeListActivity extends AppCompatActivity {
         adapter.stopListening();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return  true;
+    }
 
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.menu_logout){
+            FirebaseAuth.getInstance().signOut();
+
+
+
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
 }
